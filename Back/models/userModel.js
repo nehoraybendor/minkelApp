@@ -10,10 +10,7 @@ const userSchema=new mongoose.Schema({
     role:{
         type:String,default:"admin"
     },
-    img_profil:{
-        data: Buffer,
-        contentType: String,
-      },
+    img_profil:String,
     date_created:{
         type:Date,default:Date.now
     },
@@ -31,4 +28,10 @@ exports.ValidUser=(reqBody)=>{
         age:Joi.number().min(2).max(3).required(),
         gender:Joi.string().min(2).max(3).required()
     })
+}
+exports.ValidLogin=(reqBody)=>{
+    let joiSchema=Joi.object({
+        email:Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
+        password:Joi.string().min(3).max(150).required()})
+    return joiSchema.validate(reqBody);
 }
