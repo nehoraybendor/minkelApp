@@ -3,33 +3,39 @@ const Joi=require("joi");
 const jwt = require("jsonwebtoken");
 const { config } = require("../config/secret");
 
-const userSchema=new mongoose.Schema({
+const workerSchema=new mongoose.Schema({
     name:String,
     email:String,
     password:String,
     role:{
-        type:String,default:"admin"
+        type:String,default:"user"
     },
     img_profil:String,
     date_created:{
         type:Date,default:Date.now
     },
     age:Number,
-    gender:String
+    gender:String,
+    phone_number:String,
+    address:String,
+    salary:Number
 })
-exports.UserModel=mongoose.model("users",userSchema);
+exports.workerModel=mongoose.model("workers",workerSchema);
 
-exports.createToken = (user_id) => {
-    let token = jwt.sign({_id:user_id},config.tokenSecret,{expiresIn:"600mins"});
+exports.createToken = (worker_id) => {
+    let token = jwt.sign({_id:worker_id},config.tokenSecret,{expiresIn:"600mins"});
     return token;
   }
-exports.ValidUser=(reqBody)=>{
+exports.Validworker=(reqBody)=>{
     let joiSchema=Joi.object({
         name:Joi.string().alphanum().min(2).max(30).require,
         email:Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
         password:Joi.string().min(3).max(150).required(),
         age:Joi.number().min(16).max(120).required(),
-        gender:Joi.string().min(2).max(3).required()
+        gender:Joi.string().min(2).max(3).required(),
+        phone_number:Joi.string().require(),
+        address:Joi.string().min(3).max(150).required(),
+        salary:Joi.number().min(29.12).max(500),
     })
 }
 exports.ValidLogin=(reqBody)=>{
