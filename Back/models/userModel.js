@@ -10,10 +10,7 @@ const userSchema=new mongoose.Schema({
     role:{
         type:String,default:"admin"
     },
-    img_profil:{
-        data: Buffer,
-        contentType: String,
-      },
+    img_profil:String,
     date_created:{
         type:Date,default:Date.now
     },
