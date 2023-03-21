@@ -15,32 +15,27 @@ const workerSchema=new mongoose.Schema({
         type:Date,default:Date.now
     },
     age:Number,
+    user_id:String,
     gender:String,
     phone_number:String,
     address:String,
-    salary:Number
+    salary:{
+        type:Number,default:29.12
+    }
 })
 exports.workerModel=mongoose.model("workers",workerSchema);
 
-exports.createToken = (worker_id) => {
-    let token = jwt.sign({_id:worker_id},config.tokenSecret,{expiresIn:"600mins"});
-    return token;
-  }
+
 exports.Validworker=(reqBody)=>{
     let joiSchema=Joi.object({
-        name:Joi.string().alphanum().min(2).max(30).require,
+        name:Joi.string().alphanum().min(2).max(30).required(),
         email:Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
         password:Joi.string().min(3).max(150).required(),
         age:Joi.number().min(16).max(120).required(),
-        gender:Joi.string().min(2).max(3).required(),
-        phone_number:Joi.string().require(),
+        gender:Joi.string().min(2).max(15).required(),
+        phone_number:Joi.string().required(),
         address:Joi.string().min(3).max(150).required(),
         salary:Joi.number().min(29.12).max(500),
-    })
-}
-exports.ValidLogin=(reqBody)=>{
-    let joiSchema=Joi.object({
-        email:Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
-        password:Joi.string().min(3).max(150).required()})
+    });
     return joiSchema.validate(reqBody);
 }
