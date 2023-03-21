@@ -20,17 +20,19 @@ const userSchema=new mongoose.Schema({
 exports.UserModel=mongoose.model("users",userSchema);
 
 exports.createToken = (user_id) => {
+    console.log(config.secret)
     let token = jwt.sign({_id:user_id},config.tokenSecret,{expiresIn:"600mins"});
     return token;
   }
 exports.ValidUser=(reqBody)=>{
     let joiSchema=Joi.object({
-        name:Joi.string().alphanum().min(2).max(30).require,
+        name:Joi.string().alphanum().min(2).max(30).required(),
         email:Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
         password:Joi.string().min(3).max(150).required(),
         age:Joi.number().min(16).max(120).required(),
         gender:Joi.string().min(2).max(3).required()
     })
+    return joiSchema.validate(reqBody);
 }
 exports.ValidLogin=(reqBody)=>{
     let joiSchema=Joi.object({
