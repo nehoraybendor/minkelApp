@@ -8,7 +8,7 @@ const userSchema=new mongoose.Schema({
     email:String,
     password:String,
     role:{
-        type:String,default:"admin"
+        type:String,default:"user"
     },
     img_profil:String,
     date_created:{

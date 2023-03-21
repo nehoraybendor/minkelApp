@@ -47,35 +47,36 @@ router.post("/",async(req,res)=>{
   }
 })
 router.post("/login",async(req,res)=>{
-  console.log(req.body);
   let validBody = ValidLogin(req.body);
   if(validBody.error){
-    console.log("1");
     return res.status(400).json(validBody.error.details);
   }
   try {
-    
-    console.log("2");
     let user=await UserModel.findOne({email:req.body.email})
     if(!user){
-    console.log("3");
       return res.status(401).json({msg:"User or password not match,code:1"})
     }
     let passwordValid=await bcrypt.compare(req.body.password,user.password)
     if(!passwordValid){
-    console.log("4");
       return res.status(401).json({msg:"User or password not match,code 2"})
     }
     let token=createToken(user._id);
     res.json({token:token});
   } catch (error) {
-    console.log("5");
     console.log(error);
     res.status(500).json({ error: error.message });
   }
 })
-router.delete("/:id",authAdmin,async(req,res)=>{
-  console.log(1);
+router.delete("/:idDel",auth,async(req,res)=>{
+  let idDel=req.params.idDel;
+  try {
+    // let find=await UserModel.findOne({_id:req.tokenData._id},{password:0,_id:0,gender:0,email:0,img_profil:0})
+    let data=await UserModel.deleteOne({_id:idDel});
+    res.json(data);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
 })
 
 
