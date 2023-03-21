@@ -1,6 +1,6 @@
 const express= require("express");
 const bcrypt =require("bcrypt");
-const {auth} = require("../middlewares/auth");
+const {auth, authAdmin} = require("../middlewares/auth");
 
 
 const {UserModel, createToken,ValidUser,ValidLogin} = require("../models/userModel");
@@ -73,6 +73,9 @@ router.post("/login",async(req,res)=>{
     console.log(error);
     res.status(500).json({ error: error.message });
   }
+})
+router.delete("/:id",authAdmin,async(req,res)=>{
+  console.log(1);
 })
 
 
