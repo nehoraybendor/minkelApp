@@ -1,19 +1,12 @@
 const express= require("express");
 const bcrypt =require("bcrypt");
 const {auth, authAdmin} = require("../middlewares/auth");
-
-
 const {UserModel, createToken,ValidUser,ValidLogin} = require("../models/userModel");
 const router = express.Router();
-
 
 router.get("/", async(req,res) => {
   res.json({msg:"Users work"});
 })
-
-
-
-
 router.get("/myinfo",auth,async(req,res)=>{
   try {
     let data=await UserModel.findOne({_id:req.tokenData._id},{password:0})
@@ -76,6 +69,19 @@ router.delete("/:idDel",auth,async(req,res)=>{
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
+  }
+})
+router.put(":/idEdit",auth,async(req,res)=>{
+  let validBody=ValidUser(req.body);
+  if(!validBody){
+    return res.status(400).json(validBody.error.details);
+  }  
+  try {
+    let idEdit=req.params.idEdit;
+    let data=await UserModel.updateOne({_id:idEdit,user_id:req.tokenData._id},req.body)
+    res.json(data);
+  } catch (error) {
+    return res.status(500).json(err)
   }
 })
 
