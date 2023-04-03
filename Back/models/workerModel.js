@@ -31,6 +31,7 @@ exports.validateWorker = (reqBody) => {
         phone_number: Joi.string().required(),
         address: Joi.string().min(3).max(150).required(),
         salary: Joi.number().min(29.12).max(500),
+        img_profil:Joi.string().max(200).optional()
     });
     return joiSchema.validate(reqBody);
 }
