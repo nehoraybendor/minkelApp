@@ -1,4 +1,4 @@
-const { workerModel } = require("../models/workerModel");
+const { workerModel, validateWorker } = require("../models/workerModel");
 
 exports.getAllWorkers = async () => {
     try {
@@ -6,6 +6,17 @@ exports.getAllWorkers = async () => {
         return workers;
     } catch (error) {
         console.log(error);
+        throw error;
+    }
+};
+
+exports.addWorker = async (body) => {
+    try {
+        const validWorker = validateWorker(body);
+        if (validWorker.error) return validWorker.error.details;
+        const worker = await workerModel.create({ ...body })
+        return worker;
+    } catch (error) {
         throw error;
     }
 };
