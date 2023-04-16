@@ -71,20 +71,17 @@ router.delete("/:idDel",auth,async(req,res)=>{
     res.status(500).json(error);
   }
 })
-router.put(":/idEdit",auth,async(req,res)=>{
+router.put("/",auth,async(req,res)=>{
   let validBody=ValidUser(req.body);
   if(!validBody){
     return res.status(400).json(validBody.error.details);
   }  
   try {
-    let idEdit=req.params.idEdit;
-    let data=await UserModel.updateOne({_id:idEdit,user_id:req.tokenData._id},req.body)
+    let data=await UserModel.updateOne({_id:req.tokenData._id},req.body)
     res.json(data);
   } catch (error) {
     return res.status(500).json(err)
   }
 })
-
-
 
 module.exports = router;

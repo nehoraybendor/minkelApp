@@ -3,22 +3,54 @@ const Joi=require("joi");
 
 
 const goalSchema=new mongoose.Schema({
-   goal:String,
-   time_create:{
-        type:Date,default:Date.now
+    date: {
+        type: Date,
     },
-   deadline_time:Date,
-   status:String
+    time: {
+        type: String,
+    },
+    title: {
+        type: String,
+    },
+    description: {
+        type: String,
+    },
+    user_id: {
+        type: mongoose.Types.ObjectId,
+        ref: 'users'
+    },
+    isCompleted: {
+        type: Boolean,
+        default: false
+    },
+    created_at: {
+        type: Date,
+        default: (new Date(Date.now() + 2 * 60 * 60 * 1000))
+    },
+    isActive: {
+        type: Boolean,
+        default: true
+    }
 })
 
-exports.goalModel=mongoose.model("dealClients",dealClientSchema);
+exports.goalModel=mongoose.model("goals",goalSchema);
 
 
 exports.ValidGoal=(reqBody)=>{
-    let joiSchema=Joi.object({
-        goal:Joi.string().min(2).max(200).require(),
-        time_create:Joi.date().min(1).max(100),
-        deadline_time:Joi.date().required(),
-        status:Joi.string().min(0).max(99999999).required()
-    })
+    let joiSchema = Joi.object({
+        date: Joi.date().required(),
+        time: Joi.string().required(),
+        title: Joi.string().min(2).max(255).required(),
+        description: Joi.string().min(2).max(1000).required()
+    });
+    return joiSchema.validate(reqBody);
+}
+exports.validateGoalUpdate = (_reqBody) => {
+    let joiSchema = Joi.object({
+        date: Joi.date().allow(),
+        time: Joi.string().allow(),
+        title: Joi.string().min(2).max(255).allow(),
+        description: Joi.string().min(2).max(1000).allow()
+    });
+    return joiSchema.validate(_reqBody);
 }
