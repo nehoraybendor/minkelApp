@@ -63,8 +63,7 @@ router.post("/login",async(req,res)=>{
 router.delete("/:idDel",auth,async(req,res)=>{
   let idDel=req.params.idDel;
   try {
-    // let find=await UserModel.findOne({_id:req.tokenData._id},{password:0,_id:0,gender:0,email:0,img_profil:0})
-    let data=await UserModel.deleteOne({_id:idDel});
+     let data=await UserModel.deleteOne({_id:idDel});
     res.json(data);
   } catch (error) {
     console.log(error);

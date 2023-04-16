@@ -1,9 +1,12 @@
 const express = require("express");
 const { auth } = require("../middlewares/auth");
-const { ValidGoal, goalModel, ValidGoalUpdate } = require("../models/goalModel");
+const { ValidGoal, goalModel, validateGoalUpdate } = require("../models/goalModel");
 const { UserModel } = require("../models/userModel");
 const router = express.Router();
 
+router.get("/", async(req,res) => {
+    res.json({msg:"Goals work"});
+  })
 router.get("/:id", auth, async(req, res) => {
   
     try {
@@ -12,7 +15,7 @@ router.get("/:id", auth, async(req, res) => {
         if (!data) {
             res.status(404).json({ msg: 'No goals found' })
         }
-        res.status(200).json({ goal: data })
+        res.status(200).json(data)
 
     } catch (err) {
         console.log(err);
@@ -22,34 +25,31 @@ router.get("/:id", auth, async(req, res) => {
 })
 router.post('/', auth, async(req, res) => {
     let validBody = ValidGoal(req.body); 
-      if (validBody.error) {
-        return res.status(400).json({ err_msg: validBody.error.details });
+    if (validBody.error) {
+        return res.status(400).json( validBody.err.details);
+    
     }
     try {
         const goalObj = req.body;
         goalObj.user_id = req.tokenData._id;
-        const goal = new goalModel(goalObj);
+        const goal = new goalModel();
         await goal.save()
-        let user = await UserModel.findById(req.tokenData._id);
-        user.goals_id.push(goal._id);
-        await user.save();
         res.json(goal);
     } catch (err) {
         console.log(err);
-        return res.status(500).json({ err_msg: err });
+        return res.status(500).json({ error: 'Failed to save goal to database' });
     }
+    
 
 })
 
-
-
 router.get("/archive", auth, async(req, res) => {
     try {
-        const goals = await goalModel.find({ user_id: req.tokenData._id, isActive: false }).sort({ date: -1 })
+        const goals = await goalModel.find({ user_id: req.tokenData._id, isActive: false })
         if (!goals.length) {
             return res.status(404).json({ err_msg: "No goals found in archive" });
         }
-        res.json({ goals });
+        res.json(goals);
     } catch (err) {
         console.log(err);
         return res.status(500).json({ err_msg: err });
@@ -123,7 +123,7 @@ router.put("/completed/:id", auth, async(req, res) => {
 
 router.put('/:id', auth, async(req, res) => {
 
-    let validBody = ValidGoalUpdate(req.body);  
+    let validBody = validateGoalUpdate(req.body);  
     if (validBody.error) {
         return res.status(400).json({ err_msg: validBody.error.details });
     }

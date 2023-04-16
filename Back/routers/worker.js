@@ -3,10 +3,7 @@ const { getAllWorkers, addWorker } = require("../services/worker.service");
 const Joi = require("joi");
 const router = express.Router();
 
-//? CRUD -Creat read update delete
 
-// baseurl/workers/
-// * Read
 router.get('/', async (req, res) => {
   try {
     const response = await getAllWorkers()
@@ -16,7 +13,7 @@ router.get('/', async (req, res) => {
   }
 })
 
-//*Create
+
 router.post('/', async (req, res) => {
   try {
     const response = await addWorker(req.body)

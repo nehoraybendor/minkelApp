@@ -45,12 +45,12 @@ exports.ValidGoal=(reqBody)=>{
     });
     return joiSchema.validate(reqBody);
 }
-exports.validateGoalUpdate = (_reqBody) => {
+exports.validateGoalUpdate = (reqBody) => {
     let joiSchema = Joi.object({
         date: Joi.date().allow(),
         time: Joi.string().allow(),
         title: Joi.string().min(2).max(255).allow(),
         description: Joi.string().min(2).max(1000).allow()
     });
-    return joiSchema.validate(_reqBody);
+    return joiSchema.validate(reqBody);
 }
