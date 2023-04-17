@@ -3,8 +3,11 @@ const { getAllWorkers, addWorker } = require("../services/worker.service");
 const Joi = require("joi");
 const router = express.Router();
 
+router.get("/",async(req,res)=>{
+  res.json({msg:"Router work"});
+})
 
-router.get('/', async (req, res) => {
+router.get('/getAll', async (req, res) => {
   try {
     const response = await getAllWorkers()
     res.status(200).json({ response })

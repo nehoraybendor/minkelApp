@@ -17,7 +17,6 @@ exports.addWorker = async (body) => {
         const worker = await workerModel.create({ ...body })
         return worker;
     } catch (error) {
-        
         throw error;
     }
 };

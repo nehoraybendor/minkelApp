@@ -5,7 +5,7 @@ const {UserModel, createToken,ValidUser,ValidLogin} = require("../models/userMod
 const router = express.Router();
 
 router.get("/", async(req,res) => {
-  res.json({msg:"Users work"});
+  res.json({msg:"Router work"});
 })
 router.get("/myinfo",auth,async(req,res)=>{
   try {

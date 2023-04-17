@@ -16,7 +16,7 @@ const goalSchema=new mongoose.Schema({
         type: String,
     },
     user_id: {
-        type: mongoose.Types.ObjectId,
+          type: mongoose.Types.ObjectId,
         ref: 'users'
     },
     isCompleted: {
@@ -28,8 +28,8 @@ const goalSchema=new mongoose.Schema({
         default: (new Date(Date.now() + 2 * 60 * 60 * 1000))
     },
     isActive: {
-        type: Boolean,
-        default: true
+        type:Boolean,
+      default:true
     }
 })
 
@@ -41,7 +41,8 @@ exports.ValidGoal=(reqBody)=>{
         date: Joi.date().required(),
         time: Joi.string().required(),
         title: Joi.string().min(2).max(255).required(),
-        description: Joi.string().min(2).max(1000).required()
+        description: Joi.string().min(2).max(1000).required(),
+        user_id:Joi.string().required()
     });
     return joiSchema.validate(reqBody);
 }
