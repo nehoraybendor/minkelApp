@@ -13,10 +13,11 @@ exports.getAllWorkers = async () => {
 exports.addWorker = async (body) => {
     try {
         const validWorker = validateWorker(body);
-        if (validWorker.error) return validWorker.error.details;
+        if (validWorker.error) throw validWorker.error;
         const worker = await workerModel.create({ ...body })
         return worker;
     } catch (error) {
+        
         throw error;
     }
 };
