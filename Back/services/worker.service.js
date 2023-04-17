@@ -20,3 +20,12 @@ exports.addWorker = async (body) => {
         throw error;
     }
 };
+
+exports.editWorker = async (id_, body) => {
+    try {
+        
+
+    } catch (error) {
+
+    }
+}

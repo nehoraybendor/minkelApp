@@ -24,5 +24,13 @@ router.post('/', async (req, res) => {
   }
 })
 
+router.patch('/:idEdit',async (req,res) => {
+
+})
+
+router.delete('/idDelete',async (req,res) => {
+
+})
+
 
 module.exports = router;
