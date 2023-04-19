@@ -1,4 +1,4 @@
-const { workerModel, validateWorker } = require("../models/workerModel");
+const { workerModel, validateWorker,validateUpdateWorker } = require("../models/workerModel");
 
 exports.getAllWorkers = async () => {
     try {
@@ -17,6 +17,18 @@ exports.addWorker = async (body) => {
         const worker = await workerModel.create({ ...body })
         return worker;
     } catch (error) {
+        throw error;
+    }
+};
+exports.editWorker = async (id_, body) => {
+    try {
+        const validWorker = validateUpdateWorker(body)
+        if (validWorker.error) throw validWorker.error;
+        const updatedWorker = await workerModel.updateOne({ _id: id_ }, { ...body },{new:true});
+        console.log(updatedWorker);
+        return updatedWorker;
+    } catch (error) {
+
         throw error;
     }
 };
