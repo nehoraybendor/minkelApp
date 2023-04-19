@@ -1,5 +1,4 @@
 const express = require("express");
-const { getAllWorkers, addWorker } = require("../services/worker.service");
 const { getAllWorkers, addWorker, editWorker } = require("../services/worker.service");
 const Joi = require("joi");
 const router = express.Router();
@@ -51,8 +50,9 @@ router.patch('/:id', async (req, res) => {
 
 
 router.delete('/:id', async (req ,res) => {
+  let id=req.params.id;
   try {
-    const response = await UserModel.deleteOne({_id:req.params.id});
+    const response = await UserModel.deleteOne({_id:id});
     res.json(response);
   } catch (error) {
     if (error.details) {
