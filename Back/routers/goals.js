@@ -23,14 +23,11 @@ router.get("/:id", auth, async(req, res) => {
 })
 router.get("/list", auth, async(req, res) => {
     try {
-        const goals = await goalModel.find({});
-        if (!goals.length) {
-            return res.status(404).json({ err_msg: "No goals found" });
-        }
-        res.status(200).json({goals});
+        const todo = await goalModel.find({});
+        res.status(200).json({todo});
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ err_msg: error.details });
+        return res.status(500).json({ error});
     }
 })
 router.get("/archive", auth, async(req, res) => {

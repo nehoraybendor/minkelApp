@@ -4,7 +4,7 @@ const Joi=require("joi");
 
 const goalSchema=new mongoose.Schema({
     date: {
-        type: Date,
+        type: String,
     },
     time: {
         type: String,
@@ -38,7 +38,7 @@ exports.goalModel=mongoose.model("goals",goalSchema);
 
 exports.ValidGoal=(reqBody)=>{
     let joiSchema = Joi.object({
-        date: Joi.date().required(),
+        date: Joi.string().required(),
         time: Joi.string().required(),
         title: Joi.string().min(2).max(255).required(),
         description: Joi.string().min(2).max(1000).required(),
@@ -48,7 +48,7 @@ exports.ValidGoal=(reqBody)=>{
 }
 exports.validateGoalUpdate = (reqBody) => {
     let joiSchema = Joi.object({
-        date: Joi.date().allow(),
+        date: Joi.string().allow(),
         time: Joi.string().allow(),
         title: Joi.string().min(2).max(255).allow(),
         description: Joi.string().min(2).max(1000).allow()
