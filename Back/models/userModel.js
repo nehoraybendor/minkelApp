@@ -15,7 +15,9 @@ const userSchema=new mongoose.Schema({
         type:Date,default:Date.now
     },
     age:Number,
-    gender:String
+    gender:String,
+    goals:[{type: mongoose.Types.ObjectId,
+    ref:'goals'}]
 })
 exports.UserModel=mongoose.model("users",userSchema);
 

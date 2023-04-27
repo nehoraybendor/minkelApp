@@ -25,8 +25,8 @@ exports.authAdmin = (req,res,next) => {
       if(decodeToken.role != "admin"){
         return res.status(401).json({msg:"You must send token of admin to this endpoint"})
       }
-      req.tokenData = decodeToken
-      next();
+      req.tokenData = decodeToken;
+      next()
     }
     catch(err){
       return res.status(401).json({msg:"Token invalid or expired"})

@@ -8,11 +8,11 @@ router.get("/", async(req,res) => {
   })
 router.get("/list", async (req, res) => {
   try {
-    const deals = await dealClientModel.find();
-    res.json(deals);
+    const deals = await dealClientModel.find({});
+    res.json({deals});
   } catch (error) {
     console.log(error);
-    res.status(500).json(error);
+    res.status(500).json({error});
   }
 });
 router.get("/:dealId", async (req, res) => {

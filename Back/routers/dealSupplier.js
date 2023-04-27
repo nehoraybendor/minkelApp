@@ -17,7 +17,7 @@ router.get("/list", async (req, res) => {
   }
 });
 
-router.get("/:dealId", async (req, res) => {
+router.get("/:dealId",auth, async (req, res) => {
   const dealId = req.params.dealId;
 
   try {

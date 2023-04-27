@@ -9,7 +9,7 @@ router.get("/", async(req,res) => {
 })
 router.get("/myinfo",auth,async(req,res)=>{
   try {
-    let data=await UserModel.findOne({_id:req.tokenData._id},{password:0})
+    let data=await UserModel.findOne({_id:req.tokenData._id},{password:0}).populate('goals');
     res.json(data);
   
   } catch (error) {
