@@ -1,6 +1,7 @@
 const express = require("express");
 const { auth } = require("../middlewares/auth");
 const { ValidGoal, goalModel, validateGoalUpdate } = require("../models/goalModel");
+const {UserModel}=require("../models/userModel")
 const router = express.Router();
 
 router.get("/", async(req,res) => {
@@ -23,7 +24,7 @@ router.get("/:id", auth, async(req, res) => {
 })
 router.get("/list", auth, async(req, res) => {
     try {
-        const todo = await goalModel.find({});
+        const todo = await goalModel.find({ user_id: req.tokenData._id,isActive: false});
         res.status(200).json({todo});
     } catch (error) {
         console.log(error);
@@ -53,6 +54,9 @@ router.post('/', auth, async(req, res) => {
     }
     try {
         let goal = new goalModel(goalObj);
+        let user=await UserModel.findById(req.tokenData._id);
+        user.goals.push(goal._id);
+        await user.save()
         await goal.save()
         res.status(201).json(goal)
     } catch (err) {
