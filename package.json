@@ -1,5 +1,9 @@
 {
   "dependencies": {
+    "react-hook-form": "^7.43.9",
     "react-router-dom": "^6.10.0"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.2"
   }
 }
