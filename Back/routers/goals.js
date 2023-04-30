@@ -7,25 +7,10 @@ const router = express.Router();
 router.get("/", async(req,res) => {
     res.json({msg:"Router work"});
   })
-router.get("/:id", auth, async(req, res) => {
-  
-    try {
-        let data = await goalModel.findOne({ user_id: req.tokenData._id, isActive: true })
-
-        if (!data) {
-            res.status(404).json({ msg: 'No goals found' })
-        }
-        res.status(200).json(data)
-
-    } catch (err) {
-        console.log(err);
-        res.status(502).json({ err })
-    }
-})
 router.get("/list", auth, async(req, res) => {
     try {
-        const todo = await goalModel.find({ user_id: req.tokenData._id,isActive: false});
-        res.status(200).json({todo});
+        const todo = await goalModel.find({ user_id: req.tokenData._id,isActive:true})
+        res.status(200).json(todo);
     } catch (error) {
         console.log(error);
         return res.status(500).json({ error});
@@ -33,11 +18,11 @@ router.get("/list", auth, async(req, res) => {
 })
 router.get("/archive", auth, async(req, res) => {
     try {
-        const goals = await goalModel.find({ user_id: req.tokenData._id,isActive: true}).sort({ date: -1 });
+        const goals = await goalModel.find({ user_id: req.tokenData._id,isActive: false}).sort({ date: -1 });
         if (!goals.length) {
             return res.status(404).json({ err_msg: "No goals found in archive" });
         }
-        res.json({goals});
+        res.json(goals);
     } catch (error) {
         console.log(error);
         return res.status(500).json({ err_msg: error });

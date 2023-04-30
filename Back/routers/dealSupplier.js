@@ -7,7 +7,7 @@ router.get("/", async (req, res) => {
   res.json({ msg: "Router work" });
 });
 
-router.get("/list", async (req, res) => {
+router.get("/list",auth, async (req, res) => {
   try {
     const deals = await dealSupplierModel.find();
     res.json(deals);

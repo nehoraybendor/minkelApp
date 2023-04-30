@@ -8,7 +8,7 @@ router.get("/", async(req,res) => {
   res.json({msg:"Router work"});
 })
 
-router.get('/list', async (req, res) => {
+router.get('/list',auth, async (req, res) => {
   try {
     const response = await getAllWorkers()
     res.status(200).json({ response })
@@ -17,7 +17,7 @@ router.get('/list', async (req, res) => {
   }
 })
 
-router.get('/:id', async (req, res) => {
+router.get('/:id',auth, async (req, res) => {
   
   try {
     const response = await workerModel.findById(req.params.id)
@@ -31,7 +31,7 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-router.post('/', async (req, res) => {
+router.post('/',auth, async (req, res) => {
   try {
     const response = await addWorker(req.body)
     res.status(200).json({ response })
@@ -45,7 +45,7 @@ router.post('/', async (req, res) => {
 })
 
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id',auth, async (req, res) => {
   try {
     const response = await editWorker(req.params.id, req.body)
     res.status(200).json(req.body)
@@ -56,7 +56,7 @@ router.patch('/:id', async (req, res) => {
 })
 
 
-router.delete('/:id', async (req ,res) => {
+router.delete('/:id',auth, async (req ,res) => {
   let id=req.params.id;
   try {
     const worker = await workerModel.findByIdAndDelete({_id:id});
