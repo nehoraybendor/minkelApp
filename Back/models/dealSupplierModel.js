@@ -9,7 +9,10 @@ const dealsSupplierSchema=new mongoose.Schema({
     },
     sum:Number,
     nameProducts:String,
-    price:Number
+    price:Number,
+    user_id: {
+        type: mongoose.Schema.Types.ObjectId,
+      ref: 'users'}
 })
 
 exports.dealSupplierModel=mongoose.model("dealsSuppliers",dealsSupplierSchema);
@@ -20,7 +23,8 @@ exports.ValidDealssupplier=(reqBody)=>{
         name_supplier:Joi.string().min(2).max(30).required(),
         sum:Joi.number().min(1).max(999999).required(),
         nameProducts:Joi.string().min(2).max(150).required(),
-        price:Joi.number().min(0).max(99999999).required()
+        price:Joi.number().min(0).max(99999999).required(),
+        user_id:Joi.string().required()
     })
     return joiSchema.validate(reqBody);
 }

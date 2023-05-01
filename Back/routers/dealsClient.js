@@ -2,13 +2,14 @@ const {dealClientModel,ValidDealclient,ValidDealUpdate}=require("../models/dealC
 const express = require("express");
 const router = express.Router();
 const { auth } = require("../middlewares/auth");
+const {UserModel}=require("../models/userModel")
 
 router.get("/", async(req,res) => {
     res.json({msg:"Router work"});
   })
 router.get("/list",auth, async (req, res) => {
   try {
-    const deals = await dealClientModel.find({});
+    const deals = await dealClientModel.find({user_id:req.tokenData._id});
     res.json(deals);
   } catch (error) {
     console.log(error);
@@ -17,11 +18,14 @@ router.get("/list",auth, async (req, res) => {
 });
 router.get("/:dealId",auth, async (req, res) => {
   const dealId = req.params.dealId;
-
   try {
-    const deal = await dealClientModel.findById(dealId);
+    const deal = await dealClientModel.findById(dealId).populate({path:"user_id",select:"name"});
     if (!deal) {
       return res.status(404).json({ message: "Deal not found" });
+    }
+
+    if(deal.user_id._id != req.tokenData._id){
+      return res.status(401).json({err:"You dont have premission to this deal"})
     }
     res.json(deal);
   } catch (error) {
@@ -31,15 +35,18 @@ router.get("/:dealId",auth, async (req, res) => {
 });
 
 router.post("/", auth, async (req, res) => {
-  const validBody = ValidDealclient(req.body);
+  const dealObj=req.body;
+  dealObj.user_id=req.tokenData._id;
+  let validBody = ValidDealclient(dealObj);
   if (validBody.error) {
     return res.status(400).json(validBody.error.details);
   }
-
   try {
+    const user = await UserModel.findById(req.tokenData._id)
     const deal = new dealClientModel(req.body);
+    deal.total_price=deal.sum*deal.amount;
     await deal.save();
-    res.status(201).json(deal);
+    res.status(201).json({deal,userName:user.name});
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
@@ -53,17 +60,21 @@ router.put("/:dealId", auth, async (req, res) => {
   if (validBody.error) {
     return res.status(400).json(validBody.error.details);
   }
-
   try {
-    const deal = await dealClientModel.findByIdAndUpdate(
+    const deal=await dealClientModel.findById(dealId)
+    if (!deal) {
+      return res.status(404).json({ message: "Deal not found" });
+    }
+    if(deal.user_id._id != req.tokenData._id){
+      return res.status(401).json({err:"You dont have premission to this deal"})
+    }
+    const dealupdate = await dealClientModel.findByIdAndUpdate(
       dealId,
       { $set: req.body },
       { new: true }
     );
-    if (!deal) {
-      return res.status(404).json({ message: "Deal not found" });
-    }
-    res.json(deal);
+
+    res.json(dealupdate);
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
@@ -72,13 +83,20 @@ router.put("/:dealId", auth, async (req, res) => {
 
 router.delete("/:dealId", auth, async (req, res) => {
   const dealId = req.params.dealId;
-
   try {
-    const deal = await dealClientModel.findByIdAndDelete(dealId);
+    const deal = await dealClientModel.findById(dealId);
+
     if (!deal) {
       return res.status(404).json({ message: "Deal not found" });
     }
-    res.json(deal);
+
+    if(deal.user_id.toString() !== req.tokenData._id.toString()){
+      return res.status(401).json({err:"You dont have permission to this deal"})
+    }
+
+    const deletedDeal = await dealClientModel.findByIdAndDelete(dealId);
+
+    res.json(deletedDeal);
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
