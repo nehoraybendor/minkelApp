@@ -6,16 +6,16 @@ const { auth } = require("../middlewares/auth");
 router.get("/", async(req,res) => {
     res.json({msg:"Router work"});
   })
-router.get("/list", async (req, res) => {
+router.get("/list",auth, async (req, res) => {
   try {
     const deals = await dealClientModel.find({});
-    res.json({deals});
+    res.json(deals);
   } catch (error) {
     console.log(error);
     res.status(500).json({error});
   }
 });
-router.get("/:dealId", async (req, res) => {
+router.get("/:dealId",auth, async (req, res) => {
   const dealId = req.params.dealId;
 
   try {
