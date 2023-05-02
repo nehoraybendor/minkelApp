@@ -45,6 +45,7 @@ router.post("/", auth, async (req, res) => {
 
   try {
     const deal = new dealSupplierModel(req.body);
+    deal.total_price=deal.sum*deal.amount;
     await deal.save();
     res.status(201).json(deal);
   } catch (error) {
@@ -61,15 +62,20 @@ router.put("/:dealId", auth, async (req, res) => {
   }
 
   try {
-    const deal = await dealSupplierModel.findByIdAndUpdate(
+    const deal= await dealSupplierModel.findById(dealId)
+    if (!deal) {
+      return res.status(404).json({ message: "Deal not found" });
+    }
+    if(deal.user_id._id!=req.tokenData._id){
+      return res.status(401).json({err:"You dont have premission to this deal"})
+    }
+    const dealUpdate = await dealSupplierModel.findByIdAndUpdate(
       dealId,
       { $set: req.body },
       { new: true }
     );
-    if (!deal) {
-      return res.status(404).json({ message: "Deal not found" });
-    }
-    res.json(deal);
+
+    res.json(dealUpdate);
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
@@ -80,11 +86,18 @@ router.delete("/:dealId", auth, async (req, res) => {
   const dealId = req.params.dealId;
 
   try {
-    const deal = await dealSupplierModel.findByIdAndDelete(dealId);
+    const deal = await dealClientModel.findById(dealId);
+
     if (!deal) {
       return res.status(404).json({ message: "Deal not found" });
     }
-    res.json(deal);
+
+    if(deal.user_id.toString() !== req.tokenData._id.toString()){
+      return res.status(401).json({err:"You dont have permission to this deal"})
+    }
+    const dealDel = await dealSupplierModel.findByIdAndDelete(dealId);
+    
+    res.json(dealDel);
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
