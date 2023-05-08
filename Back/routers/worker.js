@@ -59,11 +59,16 @@ router.patch('/:id',auth, async (req, res) => {
 router.delete('/:id',auth, async (req ,res) => {
   let id=req.params.id;
   try {
-    const worker = await workerModel.findByIdAndDelete({_id:id});
+    const worker =await workerModel.findById({_id:id})
     if(!worker){
       return res.status(404).json({ error: "Worker not found" });
     }
-    res.json(worker);
+    if(deal.user_id.toString() !== req.tokenData._id.toString()){
+      return res.status(401).json({err:"You dont have permission to this deal"})
+    }
+
+    const workerdel = await workerModel.findByIdAndDelete({_id:id});
+    res.json(workerdel);
   } catch (error) {
     if (error.details) {
       res.status(400).json({ error: error.details })

@@ -7,9 +7,13 @@ const dealsSupplierSchema=new mongoose.Schema({
     time:{
         type:Date,default:Date.now
     },
-    sum:Number,
+    price:Number,
+    amount:Number,
     nameProducts:String,
-    price:Number
+    total_price:Number,
+    user_id: {
+        type: mongoose.Schema.Types.ObjectId,
+      ref: 'users'}
 })
 
 exports.dealSupplierModel=mongoose.model("dealsSuppliers",dealsSupplierSchema);
@@ -18,18 +22,21 @@ exports.dealSupplierModel=mongoose.model("dealsSuppliers",dealsSupplierSchema);
 exports.ValidDealssupplier=(reqBody)=>{
     let joiSchema=Joi.object({
         name_supplier:Joi.string().min(2).max(30).required(),
-        sum:Joi.number().min(1).max(999999).required(),
+        price:Joi.number().min(1).max(150000).required(),
         nameProducts:Joi.string().min(2).max(150).required(),
-        price:Joi.number().min(0).max(99999999).required()
+        amount:Joi.number().min(1).max(15000).required(),
+        total_price:Joi.number().min(0).max(99999999),
+        user_id:Joi.string().required()
     })
     return joiSchema.validate(reqBody);
 }
 exports.ValidDealssupplierUpdate=(reqBody)=>{
     let joiSchema=Joi.object({
         name_supplier:Joi.string().min(2).max(30).allow(),
-        sum:Joi.number().min(1).max(999999).allow(),
+        price:Joi.number().min(1).max(999999).allow(),
         nameProducts:Joi.string().min(2).max(150).allow(),
-        price:Joi.number().min(0).max(99999999).allow()
+        amount:Joi.number().min(1).max(15000).required(),
+        total_price:Joi.number().min(0).max(99999999).allow()
     })
 return joiSchema.validate(reqBody);
 }
