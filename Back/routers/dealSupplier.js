@@ -45,7 +45,7 @@ router.post("/", auth, async (req, res) => {
 
   try {
     const deal = new dealSupplierModel(req.body);
-    deal.total_price=deal.sum*deal.amount;
+    deal.total_price=deal.price*deal.amount;
     await deal.save();
     res.status(201).json(deal);
   } catch (error) {
@@ -84,9 +84,8 @@ router.put("/:dealId", auth, async (req, res) => {
 
 router.delete("/:dealId", auth, async (req, res) => {
   const dealId = req.params.dealId;
-
   try {
-    const deal = await dealClientModel.findById(dealId);
+    const deal = await dealSupplierModel.findById(dealId);
 
     if (!deal) {
       return res.status(404).json({ message: "Deal not found" });
