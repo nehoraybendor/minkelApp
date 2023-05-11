@@ -59,7 +59,7 @@ router.patch('/:id',auth, async (req, res) => {
 router.delete('/:id',auth, async (req ,res) => {
   let id=req.params.id;
   try {
-    const worker =await workerModel.findById({_id:id})
+    const worker =await workerModel.findById({_id:id,user_id:req.tokenData._id})
     if(!worker){
       return res.status(404).json({ error: "Worker not found" });
     }

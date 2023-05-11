@@ -17,7 +17,12 @@ const workerSchema = new mongoose.Schema({
     address: String,
     salary: {
         type: Number, default: 29.12
+    },
+    user_id: {
+        type: mongoose.Types.ObjectId,
+      ref: 'users'
     }
+
 })
 exports.workerModel = mongoose.model("workers", workerSchema);
 
@@ -31,6 +36,7 @@ const createWorkerSchema = Joi.object().keys({
     phone_number: Joi.string().required(),
     address: Joi.string().min(3).max(150).required(),
     salary: Joi.number().min(29.12).max(70000),
+    user_id:Joi.string().required()
 });
 
 const updateWorkerSchema = Joi.object().keys({
@@ -42,6 +48,7 @@ const updateWorkerSchema = Joi.object().keys({
     phone_number: Joi.string(),
     address: Joi.string().min(3).max(150),
     salary: Joi.number().min(29.12).max(500),
+    user_id:Joi.string().required()
 }).min(1);
 
 exports.validateWorker = (reqBody) => { 
