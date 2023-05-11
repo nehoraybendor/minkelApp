@@ -1,13 +1,15 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
+import Header from './header/header'
 
-const HeaderLine = () => {
+const Layout = () => {
   return (
    <>
-    <h3>minkel app</h3>
+   
+    <Header/>
     <Outlet/>
    </>
   )
 }
 
-export default HeaderLine
+export default Layout
