@@ -4,11 +4,11 @@ import Header from './header/header'
 
 const Layout = () => {
   return (
-   <>
+   <div className='w-screen bg-slate-400'>
    
     <Header/>
     <Outlet/>
-   </>
+   </div>
   )
 }
 

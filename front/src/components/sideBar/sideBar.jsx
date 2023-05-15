@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { UserGroupIcon } from "@heroicons/24/outline";
+import { FaBeer } from 'react-icons/fa';
+import { FiAlertCircle,FiUsers } from "react-icons/fi";
 import Home from '../pages/home'
 import Sales from '../pages/sales'
 import Doubt from '../pages/doubt'
@@ -12,24 +13,30 @@ const SideBar = () => {
     <div className='flex flex-row-reverse'>
       
     
-    <aside className='w-12 h-screen bg-purple '>
+    <aside className='w-12 h-[90vh] bg-purple '>
+      <ul className='grid gap-y-4'>
+      <li>
              <Link to={'/alog/home'}>
-                <UserGroupIcon class="h-6 w-6 text-gray-500" />
+               Home
              </Link>
-    
-{/*         
+
+    </li>
         
-         <Link to={<Sales/>}>sales</Link>
+        <li>
+         <p className='text-xs justify-center'>Sales</p>
+        </li>
+        <li>
+         Doubt
+        </li>
+    <li>
         
-        
-         <Link to={<Doubt/>}>doubts</Link>
-        
-    
-         <Link to={<Workers/>}>workers</Link>
-        
-        
-         <Link to={<Goals/>}>goals</Link> */}
-        
+         Workers
+         
+        </li>
+        <li>
+          Goals
+         </li>
+        </ul>
 
     </aside>
    

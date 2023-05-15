@@ -9,7 +9,7 @@ export const router = createBrowserRouter(
             <Route path="/alog" element={<SideBar/>}>
                 <Route path="/alog/home" element={<Home/>}/>
             </Route>
-            <Route path="*" element={<h1>not fauod 500</h1>}/>
+            <Route path="*" element={<h1>not found 404</h1>}/>
         </Route>
     )
 )
