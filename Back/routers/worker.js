@@ -28,19 +28,12 @@ router.get('/:id', auth, async (req, res) => {
   }
 })
 
-router.post('/',cloudinary.upload.single('image'),auth, async (req, res) => {
+router.post('/',auth, async (req, res) => {
   try {
     const result = req.file
     console.log(result)
     const workerObj = req.body;
-
-    // cloudinary.deleteImageFromCloudinary('ProfilePictures/w6c89d7yfsvoynmsgpml')
     workerObj.user_id = req.tokenData._id;
-    workerObj.img_profil = {
-      url:result.path,
-      filename:result.filename
-    };
-
     const validWorker = validateWorker(workerObj);
     if (validWorker.error) {
       return res.status(400).json({ error: validWorker.error.details[0].message })
@@ -53,31 +46,25 @@ router.post('/',cloudinary.upload.single('image'),auth, async (req, res) => {
   }
 })
 
-// router.patch('/:id',cloudinary.upload.single('image'), auth, async (req, res) => {
-//   try {
-//     const result = req.file.path;
-
-//     const workerObj = req.body;
-//     cloudinary.cloudinaryStore.uploader
-//     workerObj.user_id = req.tokenData._id;
-//     if(result){
-//       workerObj.img_profil =result
-//     }
-//     const validWorker = validateUpdateWorker(workerObj)
-//     if (validWorker.error) {
-//       return res.status(400).json({ error: validWorker.error.details[0].message })
-//     }
+router.patch('/:id', auth, async (req, res) => {
+  try {
+    const workerObj = req.body;
+    workerObj.user_id = req.tokenData._id;
+    const validWorker = validateUpdateWorker(workerObj)
+    if (validWorker.error) {
+      return res.status(400).json({ error: validWorker.error.details[0].message })
+    }
     
-//     const updatedWorker = await workerModel.findByIdAndUpdate(req.params.id, workerObj);
-//     if (!updatedWorker) {
-//       return res.status(404).json({ message: "Worker not found" });
-//     }
+    const updatedWorker = await workerModel.findByIdAndUpdate(req.params.id, workerObj);
+    if (!updatedWorker) {
+      return res.status(404).json({ message: "Worker not found" });
+    }
     
-//     res.status(200).json(updatedWorker);
-//   } catch (error) {
-//     res.status(500).json({ error: error.message })
-//   }
-// })
+    res.status(200).json(workerObj);
+  } catch (error) {
+    res.status(500).json({ error: error.message })
+  }
+})
 
 router.delete('/:id', auth, async (req ,res) => {
   try {
