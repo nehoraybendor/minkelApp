@@ -1,82 +1,95 @@
 const express = require("express");
-const { getAllWorkers, addWorker, editWorker } = require("../services/worker.service");
 const router = express.Router();
 const { auth } = require("../middlewares/auth");
-const { workerModel } = require("../models/workerModel");
+const { workerModel, validateWorker, validateUpdateWorker } = require("../models/workerModel");
+const cloudinary = require('../cloudinary/script');
 
 router.get("/", async(req,res) => {
   res.json({msg:"Router work"});
 })
-
-router.get('/list',auth, async (req, res) => {
+router.get('/list', auth, async (req, res) => {
   try {
-    const response = await getAllWorkers()
-    res.status(200).json({ response })
+    const workers = await workerModel.find({});
+    res.status(200).json({ workers })
   } catch (error) {
-    res.json({ error })
+    res.status(500).json({ error: error.message })
   }
 })
 
-router.get('/:id',auth, async (req, res) => {
-  
+router.get('/:id', auth, async (req, res) => {
   try {
-    const response = await workerModel.findById(req.params.id)
-    if(!response){
-      return res.status(404).json({ message: "worker not found" });
-    }
-    res.status(200).json({ response })
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error })
-  }
-})
-
-router.post('/',auth, async (req, res) => {
-  try {
-    const response = await addWorker(req.body)
-    res.status(200).json({ response })
-  } catch (error) {
-    if (error.details) {
-      res.status(400).json({ error: error.details })
-    } else {
-      res.status(500).json({ error })
-    }
-  }
-})
-
-
-router.patch('/:id',auth, async (req, res) => {
-  try {
-    const response = await editWorker(req.params.id, req.body)
-    res.status(200).json(req.body)
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({ err_msg: error.details });
-}
-})
-
-
-router.delete('/:id',auth, async (req ,res) => {
-  let id=req.params.id;
-  try {
-    const worker =await workerModel.findById({_id:id,user_id:req.tokenData._id})
+    const worker = await workerModel.findById(req.params.id)
     if(!worker){
-      return res.status(404).json({ error: "Worker not found" });
+      return res.status(404).json({ message: "Worker not found" });
     }
-    if(deal.user_id.toString() !== req.tokenData._id.toString()){
-      return res.status(401).json({err:"You dont have permission to this deal"})
-    }
-
-    const workerdel = await workerModel.findByIdAndDelete({_id:id});
-    res.json(workerdel);
+    res.status(200).json({ worker })
   } catch (error) {
-    if (error.details) {
-      res.status(400).json({ error: error.details })
-    } else {
-      res.status(500).json({ error })
-    }
+    res.status(500).json({ error: error.message })
   }
 })
 
+router.post('/',cloudinary.upload.single('image'),auth, async (req, res) => {
+  try {
+    const result = req.file
+    console.log(result)
+    const workerObj = req.body;
 
-module.exports = router;
+    // cloudinary.deleteImageFromCloudinary('ProfilePictures/w6c89d7yfsvoynmsgpml')
+    workerObj.user_id = req.tokenData._id;
+    workerObj.img_profil = {
+      url:result.path,
+      filename:result.filename
+    };
+
+    const validWorker = validateWorker(workerObj);
+    if (validWorker.error) {
+      return res.status(400).json({ error: validWorker.error.details[0].message })
+    }
+
+    const worker = await workerModel.create(workerObj);
+    res.status(200).json({ worker })
+  } catch (error) {
+    res.status(500).json({ error: error.message })
+  }
+})
+
+// router.patch('/:id',cloudinary.upload.single('image'), auth, async (req, res) => {
+//   try {
+//     const result = req.file.path;
+
+//     const workerObj = req.body;
+//     cloudinary.cloudinaryStore.uploader
+//     workerObj.user_id = req.tokenData._id;
+//     if(result){
+//       workerObj.img_profil =result
+//     }
+//     const validWorker = validateUpdateWorker(workerObj)
+//     if (validWorker.error) {
+//       return res.status(400).json({ error: validWorker.error.details[0].message })
+//     }
+    
+//     const updatedWorker = await workerModel.findByIdAndUpdate(req.params.id, workerObj);
+//     if (!updatedWorker) {
+//       return res.status(404).json({ message: "Worker not found" });
+//     }
+    
+//     res.status(200).json(updatedWorker);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message })
+//   }
+// })
+
+router.delete('/:id', auth, async (req ,res) => {
+  try {
+    const worker = await workerModel.findByIdAndDelete({ _id: req.params.id, user_id: req.tokenData._id })
+    if(!worker){
+      return res.status(404).json({ message: "Worker not found or you do not have permission" });
+    }
+
+    res.status(200).json({ message: "Worker deleted", worker });
+  } catch (error) {
+    res.status(500).json({ error: error.message })
+  }
+})
+
+module.exports = router;
