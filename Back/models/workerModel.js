@@ -6,7 +6,10 @@ const { config } = require("../config/secret");
 const workerSchema = new mongoose.Schema({
     name: String,
     email: String,
-    img_profil: String,
+    img_profil: {
+        url:String,
+        filename:String
+    },
     date_created: {
         type: Date,
         default: Date.now
@@ -42,7 +45,7 @@ const createWorkerSchema = Joi.object().keys({
 const updateWorkerSchema = Joi.object().keys({
     name: Joi.string().alphanum().min(2).max(30),
     email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
-    img_profil:Joi.string().min(3).max(5000).required(),
+    img_profil:Joi.string().min(3).max(5000),
     age: Joi.number().min(16).max(120),
     gender: Joi.string().min(2).max(15),
     phone_number: Joi.string(),
