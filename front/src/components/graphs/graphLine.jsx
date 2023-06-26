@@ -57,11 +57,15 @@ const GraphLine = () => {
     }
 
     return (
-        <div className='w-[500px] m-[10px] '>
-            <CanvasJSChart options={options}
+        <div>
+            <div className='w-[250px] m-[20px] '>
+                <CanvasJSChart options={options}
 
-            />
+                />
+            </div>
+
         </div>
+
     );
 
 }

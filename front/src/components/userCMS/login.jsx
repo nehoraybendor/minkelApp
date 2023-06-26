@@ -1,30 +1,30 @@
 import axios from 'axios';
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { MY_BASE_URL, TOKEN_KEY_NAME } from '../../const';
+// import { MY_BASE_URL, TOKEN_KEY_NAME } from '../../const';
 
 function Login() {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const onSubmit = data =>login(data.email, data.password);
     const login = async (email, password) => {
-        try {
-            const response = await axios({
-                method:'post',
-                url: 'http://'+MY_BASE_URL+'/users/login',
-                headers :{
-                    'x-api-key': TOKEN_KEY_NAME,
-                },
-                data:{
-                    email: email,
-                    password: password
-                }
-            })
-            console.log(response);
-            console.log('we are logged in ');
-            return response
-        } catch (error) {
-            throw error
-        }
+        // try {
+        //     const response = await axios({
+        //         method:'post',
+        //         url: 'http://'+MY_BASE_URL+'/users/login',
+        //         headers :{
+        //             'x-api-key': TOKEN_KEY_NAME,
+        //         },
+        //         data:{
+        //             email: email,
+        //             password: password
+        //         }
+        //     })
+        //     console.log(response);
+        //     console.log('we are logged in ');
+        //     return response
+        // } catch (error) {
+        //     throw error
+        // }
     }
     return (
         <div>

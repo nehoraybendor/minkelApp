@@ -1,20 +1,12 @@
 import React from 'react';
 import Login from '../userCMS/login';
 import Singup from '../userCMS/signup';
-<<<<<<< HEAD
-=======
 import GraphCol from '../graphs/graphCol';
 import GraphLine from '../graphs/graphLine';
 import GraphPie from '../graphs/graphPie';
 import GraphArea from '../graphs/graphArea';
->>>>>>> be015d3a5c23175e316c971bb481ebac628cc1e6
 
 const HomePage = () => {
-
-
-
-
-
 
     return (
         <div className="home-page  pt-1 bg-gray-200">
@@ -30,32 +22,30 @@ const HomePage = () => {
             <div className="main-section">
                 <div className="rectangle p-4">
                     <h2 className="text-2xl text-right bg-purple font-bold">
-                
-                  האתר שינהל לך את העסק בלי יותר מידי דפים
+
+                        האתר שינהל לך את העסק בלי יותר מידי דפים
                     </h2>
                 </div>
-<<<<<<< HEAD
-                    <div className="  bg-blue-300 flex col flex-wrap justify-center">
-                        
-                       
-=======
+                <div className="  bg-blue-300 flex col flex-wrap justify-center">
+
                     <div className="  flex col flex-wrap justify-center">
-                        <GraphLine/>
-                       <GraphCol/>
-                       <GraphPie/>
-                       <GraphArea/>
->>>>>>> be015d3a5c23175e316c971bb481ebac628cc1e6
+                        <GraphLine />
+                        <GraphCol />
+                        <GraphPie />
+                        <GraphArea />
 
                     </div>
 
+                </div>
+
+
+                <Login />
+                <Singup />
+
+
             </div>
-
-
-            <Login />
-            <Singup />
-
-
         </div>
-    );
-};
-export default HomePage;
+    )
+}
+
+export default HomePage

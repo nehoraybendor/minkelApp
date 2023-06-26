@@ -35,7 +35,7 @@ const GraphPie = () => {
     }
 
     return (
-        <div className='w-[500px] m-[10px] '>
+        <div className='w-[250px] m-[20px] '>
             <CanvasJSChart options={options}
 
             />

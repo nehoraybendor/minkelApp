@@ -8,7 +8,6 @@ const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 const GraphCol = () => {
 
     const options = {
-        theme: "light2", // "light1", "light2", "dark1", "dark2"
         exportEnabled: true,
         animationEnabled: true,
         theme: "light1", // "light1", "light2", "dark1", "dark2"
@@ -43,7 +42,7 @@ const GraphCol = () => {
     }
 
     return (
-        <div className='w-[500px] m-[10px] '>
+        <div className='w-[500px] m-[20px] '>
             <CanvasJSChart options={options}
 
             />
