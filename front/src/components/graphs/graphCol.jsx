@@ -43,7 +43,7 @@ const GraphCol = () => {
     }
 
     return (
-        <div className='w-[500px] m-[50px] '>
+        <div className='w-[500px] m-[10px] '>
             <CanvasJSChart options={options}
 
             />

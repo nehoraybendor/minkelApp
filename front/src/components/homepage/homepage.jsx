@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Login from '../userCMS/login';
 import Singup from '../userCMS/signup';
-import Graph from '../graphs/graphPie';
 import GraphCol from '../graphs/graphCol';
 import GraphLine from '../graphs/graphLine';
 import GraphPie from '../graphs/graphPie';
@@ -16,8 +15,8 @@ const HomePage = () => {
 
 
     return (
-        <div className="home-page bg-gray-200">
-            <div className="top-right-buttons flex justify-end mt-4 mr-4">
+        <div className="home-page  pt-1 bg-gray-200">
+            <div className="top-right-buttons flex justify-end mr-4">
 
 
                 <button className="btn login-button bg-blue-500 text-white font-bold py-2 px-4 rounded" onClick={() => window.my_modal_1.showModal()}>Login</button>
@@ -27,12 +26,13 @@ const HomePage = () => {
 
             </div>
             <div className="main-section">
-                <div className="rectangle bg-white p-4">
-                    <h2 className="text-2xl font-bold">
-                        ברוכים הבאים לאפליקציה Minkel
+                <div className="rectangle p-4">
+                    <h2 className="text-2xl text-right bg-purple font-bold">
+                
+                  האתר שינהל לך את העסק בלי יותר מידי דפים
                     </h2>
                 </div>
-                    <div className="  bg-blue-300 flex col flex-wrap justify-center">
+                    <div className="  flex col flex-wrap justify-center">
                         <GraphLine/>
                        <GraphCol/>
                        <GraphPie/>
