@@ -5,12 +5,17 @@ import SideBar from '../sideBar/sideBar'
 
 const Layout = () => {
   return (
-   <div className='w-screen'>
-   
-    <Header/>
-    <Outlet/>
-    {/* <SideBar/> */}
-   </div>
+    <div className=''>
+
+      <Header />
+
+      <div className='flex flex-row justify-between'>
+        <Outlet />
+        <SideBar />
+
+      </div>
+
+    </div>
   )
 }
 

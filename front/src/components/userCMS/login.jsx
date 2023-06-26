@@ -1,6 +1,31 @@
+import axios from 'axios';
 import React from 'react'
+import { useForm } from 'react-hook-form'
+import { MY_BASE_URL, TOKEN_KEY_NAME } from '../../const';
 
 function Login() {
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const onSubmit = data =>login(data.email, data.password);
+    const login = async (email, password) => {
+        try {
+            const response = await axios({
+                method:'post',
+                url: 'http://'+MY_BASE_URL+'/users/login',
+                headers :{
+                    'x-api-key': TOKEN_KEY_NAME,
+                },
+                data:{
+                    email: email,
+                    password: password
+                }
+            })
+            console.log(response);
+            console.log('we are logged in ');
+            return response
+        } catch (error) {
+            throw error
+        }
+    }
     return (
         <div>
             <dialog id="my_modal_1" className="modal">
@@ -9,14 +34,14 @@ function Login() {
 
                     <h2 className='text-center text-[30px]'>Login</h2>
                     <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-                    <form className="mt-8 space-y-4 p-4" action="#">
+                    <form className="mt-8 space-y-4 p-4" action="#" onSubmit={handleSubmit(onSubmit)}>
                         <div>
                             <label for="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                            <input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required />
+                            <input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required   {...register('email', {})} />
                         </div>
                         <div>
                             <label for="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
-                            <input type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                            <input type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required {...register('password', {})}/>
                         </div>
                         <div className="flex items-start">
                             <div className="flex items-center h-5">

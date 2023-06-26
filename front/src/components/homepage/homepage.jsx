@@ -1,8 +1,6 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import Login from '../userCMS/login';
 import Singup from '../userCMS/signup';
-import Graph from '../compos/graph';
 
 const HomePage = () => {
 
@@ -30,11 +28,7 @@ const HomePage = () => {
                 </div>
                     <div className="  bg-blue-300 flex col flex-wrap justify-center">
                         
-                        <Graph />
-                        <Graph />
-                        <Graph />
-
-                        <Graph />
+                       
 
                     </div>
 

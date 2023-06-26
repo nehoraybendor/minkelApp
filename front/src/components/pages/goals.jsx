@@ -1,10 +1,10 @@
 import React from 'react'
+import TodoList from './todolist'
 
 const Goals = () => {
   return (
-    <div className='flex flex-row'>
-      <div></div>
-      <div></div>
+    <div className='mx-auto'>
+      <TodoList/>
     </div>
   )
 }

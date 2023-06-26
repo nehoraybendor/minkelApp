@@ -15,7 +15,7 @@ export const router = createBrowserRouter(
             <Route path="/" element={<HomePage/>}/>
             <Route path="/minkel" >
                 <Route path="/minkel/home" element={<Home/>}/>
-                <Route path="/minkel/login" element={<Loginko/>}/>
+                {/* <Route path="/minkel/login" element={<Loginko/>}/> */}
                 <Route path="/minkel/workers" element={<Workers/>}/>
                 <Route path="/minkel/sales" element={<Sales/>}/>
                 <Route path="/minkel/doubt" element={<Doubt/>}/>
