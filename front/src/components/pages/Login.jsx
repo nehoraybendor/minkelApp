@@ -2,7 +2,7 @@ import axios from 'axios';
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { MY_BASE_URL, TOKEN_KEY_NAME } from '../../const';
-const Login = () => {
+const Loginko = () => {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const onSubmit = data =>login(data.email, data.password);
     const login = async (email, password) => {
@@ -69,4 +69,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default Loginko
