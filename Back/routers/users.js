@@ -25,7 +25,7 @@ router.post("/",async(req,res)=>{
   }
   try {
     let user=new UserModel(req.body);
-    user.password=await bcrypt.hash(user.password,10);
+    user.password= bcrypt.hash(user.password,10);
     await user.save();
 
     user.password="******";
@@ -49,7 +49,7 @@ router.post("/login",async(req,res)=>{
     if(!user){
       return res.status(401).json({msg:"User or password not match,code:1"})
     }
-    let passwordValid=await bcrypt.compare(req.body.password,user.password)
+    let passwordValid= bcrypt.compare(req.body.password,user.password)
     if(!passwordValid){
       return res.status(401).json({msg:"User or password not match,code 2"})
     }

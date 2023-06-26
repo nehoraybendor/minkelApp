@@ -2,7 +2,10 @@ import React from 'react'
 
 const Goals = () => {
   return (
-    <div>Goals</div>
+    <div className='flex flex-row'>
+      <div></div>
+      <div></div>
+    </div>
   )
 }
 
