@@ -1,0 +1,48 @@
+import React from 'react'
+import CanvasJSReact from '@canvasjs/react-charts';
+
+
+
+const CanvasJSChart = CanvasJSReact.CanvasJSChart;
+
+const Graph = () => {
+
+    const options = {
+        theme: "light2", // "light1", "light2", "dark1", "dark2"
+        exportEnabled: true,
+        animationEnabled: true,
+        title: {
+            text: "Desktop Browser Market Share in 2016"
+        },
+        data: [{
+            type: "pie",
+            startAngle: 25,
+            toolTipContent: "<b>{label}</b>: {y}%",
+            showInLegend: "true",
+            legendText: "{label}",
+            indexLabelFontSize: 16,
+            indexLabel: "{label} - {y}%",
+            dataPoints: [
+                { y: 51.08, label: "Chrome" },
+                { y: 27.34, label: "Internet Explorer" },
+                { y: 10.62, label: "Firefox" },
+                { y: 5.02, label: "Microsoft Edge" },
+                { y: 4.07, label: "Safari" },
+                { y: 1.22, label: "Opera" },
+                { y: 0.44, label: "Others" }
+            ]
+        }]
+    }
+
+    return (
+        <div className='w-[500px] m-[50px] '>
+            <CanvasJSChart options={options}
+
+            />
+        </div>
+    );
+
+}
+
+
+export default Graph
