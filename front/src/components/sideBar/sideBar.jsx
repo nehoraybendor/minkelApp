@@ -1,45 +1,49 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { FaBeer } from 'react-icons/fa';
-import { FiAlertCircle,FiUsers } from "react-icons/fi";
-import Home from '../pages/home'
-import Sales from '../pages/sales'
-import Doubt from '../pages/doubt'
-import Goals from '../pages/goals'
-import Workers from '../pages/workers'
+import { Link, Outlet } from 'react-router-dom'
+import { BiHomeAlt2, BiShoppingBag } from "react-icons/bi";
+import { MdOutlineAddShoppingCart } from "react-icons/md";
+import { HiOutlineUsers } from "react-icons/hi2";
+import { GiBullseye } from "react-icons/gi";
+
 
 const SideBar = () => {
   return (
     <div className='flex flex-row-reverse'>
       
     
-    <aside className='w-12 h-[90vh] bg-purple '>
-      <ul className='grid gap-y-4'>
-      <li>
-             <Link to={'/alog/home'}>
-               Home
+    <aside className='w-12 h-[92.95vh] bg-purple flex flex-col justify-around '>
+     <div>
+             <Link to={'/minkel/home'} >
+              <BiHomeAlt2 className='w-12 h-10 '/>
              </Link>
-
-    </li>
-        
-        <li>
-         <p className='text-xs justify-center'>Sales</p>
-        </li>
-        <li>
-         Doubt
-        </li>
-    <li>
-        
-         Workers
-         
-        </li>
-        <li>
-          Goals
-         </li>
-        </ul>
-
+            
+    </div>
+     <div>
+             <Link to={'/minkel/sales'} >
+             <MdOutlineAddShoppingCart className='w-12 h-10 '/>
+             </Link>
+            
+    </div>
+     <div>
+             <Link to={'/minkel/doubt'} >
+             <BiShoppingBag className='w-12 h-10 '/>
+             </Link>
+            
+    </div>
+     <div>
+             <Link to={'/minkel/workers'} >
+             <HiOutlineUsers className='w-12 h-10 '/>
+             </Link>
+            
+    </div>
+     <div>
+             <Link to={'/minkel/goals'} >
+             <GiBullseye className='w-12 h-10'/>
+             </Link>
+            
+    </div>
     </aside>
-   
+   <Outlet/>
       </div>
   )
 }

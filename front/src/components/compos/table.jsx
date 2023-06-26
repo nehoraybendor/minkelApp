@@ -1,9 +1,8 @@
 import React from 'react'
 
-const Doubt = () => {
+const Table = () => {
   return (
-    <div>
-       <div className='bg-red-500'>
+    <div className='bg-red-500'>
       <table>
         <thead>
           <tr>
@@ -13,18 +12,17 @@ const Doubt = () => {
           </tr>
         </thead>
         <tbody>
-          {data.map((item) => (
+          {/* {data.map((item) => (
             <tr key={item.id}>
               <td>{item.id}</td>
               <td>{item.name}</td>
               <td>{item.age}</td>
             </tr>
-          ))}
+          ))} */}
         </tbody>
       </table>
-    </div>
     </div>
   )
 }
 
-export default Doubt
+export default Table
