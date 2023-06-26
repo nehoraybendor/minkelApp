@@ -2,7 +2,11 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Login from '../userCMS/login';
 import Singup from '../userCMS/signup';
-import Graph from '../compos/graph';
+import Graph from '../graphs/graphPie';
+import GraphCol from '../graphs/graphCol';
+import GraphLine from '../graphs/graphLine';
+import GraphPie from '../graphs/graphPie';
+import GraphArea from '../graphs/graphArea';
 
 const HomePage = () => {
 
@@ -29,12 +33,10 @@ const HomePage = () => {
                     </h2>
                 </div>
                     <div className="  bg-blue-300 flex col flex-wrap justify-center">
-                        
-                        <Graph />
-                        <Graph />
-                        <Graph />
-
-                        <Graph />
+                        <GraphLine/>
+                       <GraphCol/>
+                       <GraphPie/>
+                       <GraphArea/>
 
                     </div>
 

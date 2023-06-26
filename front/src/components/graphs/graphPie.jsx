@@ -5,7 +5,7 @@ import CanvasJSReact from '@canvasjs/react-charts';
 
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
-const Graph = () => {
+const GraphPie = () => {
 
     const options = {
         theme: "light2", // "light1", "light2", "dark1", "dark2"
@@ -45,4 +45,4 @@ const Graph = () => {
 }
 
 
-export default Graph
+export default GraphPie
