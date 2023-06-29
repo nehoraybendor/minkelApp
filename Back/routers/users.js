@@ -25,18 +25,18 @@ router.post("/",async(req,res)=>{
   }
   try {
     let user=new UserModel(req.body);
-    user.password= bcrypt.hash(user.password,10);
+    user.password= await bcrypt.hash(user.password,10);
     await user.save();
-
+  
     user.password="******";
     res.status(201).json(user)
   
   } catch (error) {
-    if(err.code==11000){
+    if(error.code==11000){
       return res.status(401).json({msg:"Email already in system,try log in",code:11000})
     }
-    console.log(err);
-    res.status(500).json(err);
+    console.log(error);
+    res.status(500).json(error);
   }
 })
 router.post("/login",async(req,res)=>{
