@@ -6,7 +6,7 @@ const Sales = () => {
   const [sales, setSales] = useState([])
   const [loadning, setLoading] = useState(false)
   const url = 'http://' + MY_BASE_URL + "/dealClient/list"
-  useEffect(() => fetchRequest(), [])
+  useEffect(() => {fetchRequest()}, [])
 
   const fetchRequest = async () => {
     try {

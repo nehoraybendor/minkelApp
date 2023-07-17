@@ -10,21 +10,17 @@ const HomePage = () => {
 
     return (
         <div className="home-page  pt-1 bg-gray-200">
-            <div className="top-right-buttons flex justify-end mr-4">
+            <div className="top-right-buttons flex justify-end mr-1">
 
 
-                <button className="btn login-button bg-blue-500 text-white font-bold py-2 px-4 rounded" onClick={() => window.my_modal_1.showModal()}>Login</button>
+                <button className="btn login-button bg-blue-500 text-white font-bold py-2 px-3 rounded" onClick={() => window.my_modal_1.showModal()}>Login</button>
 
-                <button className="signup-button bg-green-500 text-white font-bold py-2 px-4 rounded ml-2" onClick={() => window.my_modal_2.showModal()}>Sing Up</button>
+                <button className="signup-button bg-green-500 text-white font-bold py-2 px-3 rounded ml-1" onClick={() => window.my_modal_2.showModal()}>Sing Up</button>
 
 
             </div>
             <div className="main-section">
-                <div className="rectangle p-4">
-                    <h2 className="text-2xl text-right bg-purple font-bold">
-
-                        האתר שינהל לך את העסק בלי יותר מידי דפים
-                    </h2>
+                <div className="rectangle p-1">
                 </div>
                 <div className="  bg-blue-300 flex col flex-wrap justify-center">
 

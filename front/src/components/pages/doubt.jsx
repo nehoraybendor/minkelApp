@@ -4,7 +4,7 @@ const Doubt = () => {
 
 
   return (
-    <div className='mx-auto'>
+    <div className='mx-auto  '>
       <h2 className='text-center text-[50px] mt-2'>DOUBT</h2>
 
       <div className="flex  justify-between my-5">

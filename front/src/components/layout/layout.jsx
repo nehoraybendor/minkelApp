@@ -9,7 +9,7 @@ const Layout = () => {
 
       <Header />
 
-      <div className='flex flex-row justify-between'>
+      <div className='flex flex-row justify-between '>
         <Outlet />
         <SideBar />
 
