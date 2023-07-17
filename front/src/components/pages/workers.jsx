@@ -1,5 +1,5 @@
 import React from 'react'
-import Table from '../compos/table'
+
 import WorkInfo from './workInfo'
 
 const Workers = () => {

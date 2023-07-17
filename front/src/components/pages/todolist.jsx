@@ -48,6 +48,7 @@ const TodoList = () => {
 
       <div className="flex mb-4">
         <input
+          name='newgoal'
           type="text"
           className="input input-bordered w-full max-w-xs bg-white"
           placeholder="Enter a task..."
