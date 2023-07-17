@@ -2,7 +2,7 @@ import React from 'react'
 
 function WorkInfo({ profile }) {
     return (
-        <dialog id="my_modal_2" className="modal">
+        <dialog id="my_modal_3" className="modal">
             <form method="dialog" className="modal-box">
                 <div className="avatar flex justify-center">
                     <div className="w-28 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
