@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react';
 import { serviceAPI } from '../../../services/apiServices';
-import { MY_BASE_URL } from '../../constant';
 import DropdownButton from '../compos/dropDown';
 const Sales = () => {
   const [sales, setSales] = useState([])
