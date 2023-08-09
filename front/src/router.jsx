@@ -10,9 +10,9 @@ import Login from "./components/userCMS/login"
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
-        <Route path="/" element={<Layout/>} >
+        <Route path="/"  >
             <Route path="/" element={<HomePage/>}/>
-            <Route path="/minkel" >
+            <Route path="/minkel" element={<Layout/>}>
                 <Route path="/minkel/home" element={<Home/>}/>
                 <Route path="/minkel/login" element={<Login/>}/>
                 <Route path="/minkel/workers" element={<Workers/>}/>

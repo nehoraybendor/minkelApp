@@ -8,8 +8,8 @@ import { GiBullseye } from "react-icons/gi";
 
 const SideBar = () => {
         return (
-                <div className='border-y border-current sticky z-50 bg-white top-[43px] h-7'>
-                        <aside  className='w-12 h-[92.95vh] flex flex-col justify-around mt-[-4px] h-100 bg-gray-50 focus:ring-blue-500 fXocus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 '>
+              
+                        <aside  className='bg-primary-content w-12 h-[95vh] flex flex-col justify-around   '>
                                 <div>
                                         <Link to={'/minkel/home'} >
                                                 <BiHomeAlt2 className='w-12 h-10' />
@@ -37,7 +37,6 @@ const SideBar = () => {
                                 </div>
                         </aside>
 
-                </div>
         )
 }
 
