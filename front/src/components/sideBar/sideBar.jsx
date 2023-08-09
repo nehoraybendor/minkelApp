@@ -11,11 +11,6 @@ const SideBar = () => {
               
                         <aside  className='bg-secondary-content w-12 h-[95vh] flex flex-col justify-around   '>
                                 <div>
-                                        <Link to={'/'} >
-                                                <BiHomeAlt2 className='w-12 h-10' />
-                                        </Link>
-                                </div>
-                                <div>
                                         <Link to={'/sales'} >
                                                 <MdOutlineAddShoppingCart className='w-12 h-10' />
                                         </Link>
