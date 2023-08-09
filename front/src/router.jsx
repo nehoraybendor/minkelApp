@@ -10,15 +10,15 @@ import Login from "./components/userCMS/login"
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
-        <Route path="/"  >
-            <Route path="/" element={<HomePage/>}/>
-            <Route path="/minkel" element={<Layout/>}>
-                <Route path="/minkel/home" element={<Home/>}/>
-                <Route path="/minkel/login" element={<Login/>}/>
-                <Route path="/minkel/workers" element={<Workers/>}/>
-                <Route path="/minkel/sales" element={<Sales/>}/>
-                <Route path="/minkel/doubt" element={<Doubt/>}/>
-                <Route path="/minkel/goals" element={<Goals/>}/>
+        <Route >
+            <Route path="/landing" element={<HomePage/>}/>
+            <Route path="/" element={<Layout/>}>
+                <Route index element={<Home/>}/>
+                {/* <Route path="/login" element={<Login/>}/> // not in use  */ } 
+                <Route path="/workers" element={<Workers/>}/>
+                <Route path="/sales" element={<Sales/>}/>
+                <Route path="/doubt" element={<Doubt/>}/>
+                <Route path="/goals" element={<Goals/>}/>
                 
             </Route>
             <Route path="*" element={<h1>not found 404</h1>}/>
