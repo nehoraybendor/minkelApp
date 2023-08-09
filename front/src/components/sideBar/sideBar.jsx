@@ -11,27 +11,27 @@ const SideBar = () => {
               
                         <aside  className='bg-secondary-content w-12 h-[95vh] flex flex-col justify-around   '>
                                 <div>
-                                        <Link to={'/minkel/home'} >
+                                        <Link to={'/'} >
                                                 <BiHomeAlt2 className='w-12 h-10' />
                                         </Link>
                                 </div>
                                 <div>
-                                        <Link to={'/minkel/sales'} >
+                                        <Link to={'/sales'} >
                                                 <MdOutlineAddShoppingCart className='w-12 h-10' />
                                         </Link>
                                 </div>
                                 <div>
-                                        <Link to={'/minkel/doubt'} >
+                                        <Link to={'/doubt'} >
                                                 <BiShoppingBag className='w-12 h-10' />
                                         </Link>
                                 </div>
                                 <div>
-                                        <Link to={'/minkel/workers'} >
+                                        <Link to={'/workers'} >
                                                 <HiOutlineUsers className='w-12 h-10' />
                                         </Link>
                                 </div>
                                 <div>
-                                        <Link to={'/minkel/goals'} >
+                                        <Link to={'/goals'} >
                                                 <GiBullseye className='w-12 h-10' />
                                         </Link>
                                 </div>
