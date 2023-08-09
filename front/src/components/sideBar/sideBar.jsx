@@ -9,7 +9,7 @@ import { GiBullseye } from "react-icons/gi";
 const SideBar = () => {
         return (
               
-                        <aside  className='bg-primary-content w-12 h-[95vh] flex flex-col justify-around   '>
+                        <aside  className='bg-secondary-content w-12 h-[95vh] flex flex-col justify-around   '>
                                 <div>
                                         <Link to={'/minkel/home'} >
                                                 <BiHomeAlt2 className='w-12 h-10' />

@@ -1,14 +1,14 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
-
+import { Icon } from '@iconify/react';
 const Header = () => {
-    const nav = useNavigate()
+
     return (
-        <button onClick={()=>{
-            nav("/")
-        }} className=" border-current sticky z-50 bg-secondary top-0 h-[5vh] min-w-full ">
-            <img className='h-8' src="/assets/minkelimg.jpeg" alt="" />
-        </button>
+        <div className=" flex items-center space-x-2  bg-primary-content top-0 h-[5vh] min-w-full text-2xl p-2 text-accent-focus">
+            <Icon icon="streamline:money-graph-bar-increase-up-product-performance-increase-arrow-graph-business-chart" />
+            <Link to={"/"}>MinkelAPP</Link>
+        </div>
     )
 }
 
