@@ -12,22 +12,27 @@ function FBRegister() {
     const { register, handleSubmit, formState: { errors } } = useForm<FBRegisterInput>({
         resolver: zodResolver(loginValidation)
     });
-    const onSubmit1 = (data: LoginInput) => {
-        console.log(data);
-        (window as any).completeProfile.showModal();
-        (window as any).FBRegister.close();
+    const onSubmit1 = async ({ email, password }: LoginInput) => {
+
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+            navigate("/")
+        } catch (error) {
+            console.log(error);
+
+        }
     }
 
     const googleSignIn = async () => {
         try {
             await signInWithPopup(auth, new GoogleAuthProvider());
-            (window as any).completeProfile.showModal();
-            (window as any).FBRegister.close();
-            
+            navigate("/")
+
         } catch (error) {
 
         }
     }
+
 
     return (
         <div>

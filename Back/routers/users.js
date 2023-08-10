@@ -25,7 +25,7 @@ router.post("/", async (req, res) => {
   try {
     let user = new UserModel(req.body);
     await user.save();
-    fbAdmin.auth().setCustomUserClaims(user.uid, { role: "user" })
+    fbAdmin.auth().setCustomUserClaims(user.uid, { fullName: user.fullName })
 
     res.status(201).json({ msg: 'User created successfully', user })
 
