@@ -6,17 +6,21 @@ export const genders = [
     "OTHER"
 ] as const
 
-
-export const registerValidation = z.object({
-    fullName: z.string().min(2).max(30).regex(/^[a-zA-Zא-ת ]*$/gm),
-    gender: z.enum(genders),
-    age: z.number().min(18).max(200),
+export const FBRegisterValidation = z.object({
     email: z.string().email(),
     password: z.string().min(6).max(16),
     confirmPassword: z.string().min(1),
 }).refine(({ password, confirmPassword }) => password === confirmPassword,
     { message: "password dont match!", path: ["confirmPassword"] }
 )
+
+export type FBRegisterInput = z.infer<typeof FBRegisterValidation>
+
+export const registerValidation = z.object({
+    fullName: z.string().min(2).max(30).regex(/^[a-zA-Zא-ת ]*$/gm),
+    gender: z.enum(genders),
+    age: z.number().min(18).max(200),
+})
 
 export type RegisterInput = z.infer<typeof registerValidation>
 

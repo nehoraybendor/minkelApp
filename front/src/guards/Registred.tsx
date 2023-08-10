@@ -14,7 +14,7 @@ const Registred: FC<props> = ({children}) => {
     useEffect(() => {
         setLoading(true)
         const unsubObserver = onAuthStateChanged(auth, (user) => {
-            if (!user) navigate('/landing')
+            // if (!user) navigate('/landing')  //! turned off on test 
             setLoading(false)
         })
         return () => unsubObserver();
