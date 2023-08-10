@@ -69,9 +69,10 @@ function Singup() {
                             {...register("confirmPassword")} />
                         {errors.confirmPassword && <h1 className="text-error p-2 ">{errors.confirmPassword.message}</h1>}
                     </div>
-
-                    <button  type="submit" className="btn btn-info">Sing Up</button>
+                        <div className='flex-'>
+                    <button  type="submit" className="btn btn-info mt-3 mr-3">Sing Up</button>
                     <button  type="button" className="btn btn-info">Sing up using google</button>
+                    </div>
                     <div className="text-sm font-medium text-gray-900 dark:text-white">
                         Already have an account ? <a className="text-blue-600 hover:underline dark:text-blue-500 capitalize"
                             onClick={() => {
