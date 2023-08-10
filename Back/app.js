@@ -2,9 +2,16 @@ const express = require("express");
 const path = require("path");
 const http = require("http");
 const cors = require("cors");
-
-const {routesInit} = require("./routers/configRoutes")
+const { initializeApp } = require('firebase-admin/app');
+const cred = require('./cred.json');
+const { routesInit } = require("./routers/configRoutes")
 require("./db/mongoConnect")
+
+
+var admin = require("firebase-admin");
+const fb = initializeApp({
+    credential: admin.credential.cert(cred)
+});
 
 const app = express();
 // מאפשר גם לדומיין שלא קשור לשרת לבצע בקשה 
@@ -13,7 +20,7 @@ app.use(cors());
 app.use(express.json());
 
 // דואג שתקיית פאבליק כל הקבצים בה יהיו חשופים לצד לקוח
-app.use(express.static(path.join(__dirname,"public")));
+app.use(express.static(path.join(__dirname, "public")));
 
 // פונקציה שמגדירה את כל הראוטים הזמנים באפליקציית
 // צד שרת שלנו

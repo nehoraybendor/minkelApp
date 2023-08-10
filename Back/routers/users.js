@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const { auth, authAdmin } = require("../middlewares/auth");
 const { UserModel, createToken, ValidUser, ValidLogin } = require("../models/userModel");
 const router = express.Router();
-
+const fbAdmin = require("firebase-admin")
 router.get("/myinfo", auth, async (req, res) => {
   try {
     let data = await UserModel.findOne({ _id: req.tokenData._id }, { password: 0 }).populate('goals');
@@ -25,13 +25,13 @@ router.post("/", async (req, res) => {
   try {
     let user = new UserModel(req.body);
     await user.save();
+    fbAdmin.auth().setCustomUserClaims(user.uid, { role: "user" })
 
-    
     res.status(201).json({ msg: 'User created successfully', user })
 
   } catch (error) {
     if (error.code == 11000) {
-      return res.status(401).json({ msg: "user ALredy Exist  in system", code: 11000 })
+      return res.status(409).json({ msg: "user ALredy Exist  in system", code: 11000 })
     }
     console.log(error);
     res.status(500).json(error);

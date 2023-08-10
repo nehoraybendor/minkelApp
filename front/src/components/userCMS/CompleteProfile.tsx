@@ -4,23 +4,45 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { zodResolver } from "@hookform/resolvers/zod"
 import { RegisterInput, registerValidation } from './validation';
-
+import { useCreateUserMutation } from '../../redux/API/user.api';
+import BasicLoading from '../LoadingScreen/BasicLoading';
+import { getAuth } from 'firebase/auth';
 
 
 function CompleteProfile() {
-
+    const auth = getAuth()
+    const navigate = useNavigate()
     const { register, handleSubmit, setValue, formState: { errors, isValid } } = useForm<RegisterInput>({
         resolver: zodResolver(registerValidation)
     });
-    const onSubmit1 = (data: RegisterInput) => console.log(data);
+    const [createUser, { isLoading, isSuccess, isError, error }] = useCreateUserMutation()
+    const onSubmit1 = async (data: RegisterInput) => {
+        try {
+            console.log(data);
+            if (!auth?.currentUser?.uid) {
+                (window as any).errorReload.showModal()
+                throw new Error("faild  to auth")
+            }
+            await createUser({ ...data, uid: auth.currentUser.uid });
+            await auth.currentUser.getIdTokenResult(true);
+            navigate('/');
+            (window as any).completeProfile.close()
+        } catch (error) {
+            console.log(error);
+        }
 
 
+    }
+
+    if (isLoading) (window as any).basicLoading.showModal()
+    if (isSuccess) (window as any).basicLoading.close()
     return (
         <div>
+            <BasicLoading />
             <dialog id="completeProfile" className="modal">
 
                 <form method="dialog2" className="modal-box space-y-3" onSubmit={handleSubmit(onSubmit1)}>
-                    <h2 className='text-center text-[30px] capitalize'>complete you profile </h2>
+                    <h2 className='text-center text-[30px] capitalize'>complete you profilee </h2>
                     <button type='button'
                         onClick={() => (window as any).completeProfile.close()}
 
@@ -29,7 +51,7 @@ function CompleteProfile() {
 
                     <div>
                         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Full name</label>
-                        <input type="text" name="firstname" id="firstname" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nehoray"
+                        <input type="text" id="firstname" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nehoray"
                             {...register('fullName', {})}
                         />
                         {errors.fullName && <h1 className="text-error p-2 ">{errors.fullName.message}</h1>}
@@ -60,13 +82,14 @@ function CompleteProfile() {
                     </div>
                     <div>
                         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Age</label>
-                        <input type="text" name="lastname" id="lastname" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Bendor"
+                        <input type="text" id="lastname" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Bendor"
                             {...register('age', { valueAsNumber: true })}
                         />
                         {errors.age && <h1 className="text-error p-2 ">{errors.age.message}</h1>}
                     </div>
-
+                    <button type='submit' className='btn btn-info' >save</button>
                 </form>
+
 
 
 

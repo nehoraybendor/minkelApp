@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Login from '../userCMS/login';
 import FBRegister from '../userCMS/FBRegister';
 import CompleteProfile from '../userCMS/completeProfile';

@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 require('dotenv').config()
 const userSchema = new mongoose.Schema({
     uid: String,
+    fullName: String,
     date_created: {
         type: Date, default: Date.now
     },
@@ -24,6 +25,7 @@ exports.createToken = (user_id) => {
 exports.ValidUser = (reqBody) => {
     let joiSchema = Joi.object({
         uid: Joi.string(),
+        fullName: Joi.string().min(1).max(30).required(),
         age: Joi.number().min(18).max(120).required(),
         gender: Joi.string().required().valid('MALE','FEMALE','OTHER'),
     })
