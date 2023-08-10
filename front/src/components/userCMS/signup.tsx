@@ -74,12 +74,12 @@ function Singup() {
                     <button  type="button" className="btn btn-info">Sing up using google</button>
                     </div>
                     <div className="text-sm font-medium text-gray-900 dark:text-white">
-                        Already have an account ? <a className="text-blue-600 hover:underline dark:text-blue-500 capitalize"
+                        Already have an account ? <button className="text-blue-600 hover:underline dark:text-blue-500 capitalize"
                             onClick={() => {
                                 (window as any).my_modal_1.showModal();
                                 (window as any).my_modal_2.close();
                             }}
-                        >signIn</a>
+                        >signIn</button>
                     </div>
                 </form>
 
