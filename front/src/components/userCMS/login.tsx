@@ -48,12 +48,12 @@ function Login() {
                         <button type="submit" className="btn btn-outline btn-info">Login using google</button>
                     </div>
                     <div className="text-sm font-medium text-gray-900 dark:text-white ">
-                        Not registered yet? <a className="text-blue-600 hover:underline dark:text-blue-500"
+                        Not registered yet? <button className="text-blue-600  hover:underline dark:text-blue-500"
                             onClick={() => {
                                 (window as any).my_modal_2.showModal();
                                 (window as any).my_modal_1.close();
                             }}
-                        >Create account</a>
+                        >Create account</button>
                     </div>
                     {/* </form> */}
 

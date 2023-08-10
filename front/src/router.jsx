@@ -7,7 +7,7 @@ import HomePage from "./components/homepage/homepage"
 import Doubt from "./components/pages/doubt"
 import Goals from "./components/pages/goals"
 import Login from "./components/userCMS/login"
-import Registred from "./guards/registred"
+import Registred from "./guards/Registred"
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
