@@ -24,9 +24,12 @@ function CompleteProfile() {
                 throw new Error("faild  to auth")
             }
             await createUser({ ...data, uid: auth.currentUser.uid });
-            await auth.currentUser.getIdTokenResult(true);
-            navigate('/');
+            const token = await auth.currentUser.getIdToken(true);
+
+
+
             (window as any).completeProfile.close()
+            navigate('/', { state: { refresh: "refresh" } });
         } catch (error) {
             console.log(error);
         }

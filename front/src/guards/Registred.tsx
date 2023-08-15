@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import CompleteProfile from '../components/userCMS/CompleteProfile'
 import { useDispatch } from 'react-redux'
 import { setTokenData } from '../redux/slice/user.slice'
@@ -14,18 +14,19 @@ const Registred: FC<props> = ({ children }) => {
     const [loading, setLoading] = useState<boolean>(false)
     const navigate = useNavigate()
     const dispatch = useDispatch()
-
+    const location = useLocation()
     useEffect(() => {
         setLoading(true)
         const unsubObserver = onAuthStateChanged(auth, async (user) => {
-            if (!user) navigate('/landing')  
-            const tokendata = await user?.getIdTokenResult(false)
-            
-            console.log(tokendata?.claims);
-            
-            if (!tokendata?.claims.fullName)(window as any).completeProfile.showModal()
+            if (!user) navigate('/landing')
+            if (location?.state?.refresh === "refresh"){
+                await user?.getIdTokenResult(true)
+            }
+            const tokendata = await user?.getIdTokenResult()
+            console.log(tokendata);
+            if (!tokendata?.claims.fullName) (window as any).completeProfile.showModal()
             dispatch(setTokenData(tokendata))
-                setLoading(false)
+            setLoading(false)
         })
         return () => unsubObserver();
     }, [auth])
@@ -33,7 +34,7 @@ const Registred: FC<props> = ({ children }) => {
 
     return (
         <>
-        <CompleteProfile/>
+            <CompleteProfile />
             {loading ? <div>loading...</div> : children}
         </>
 

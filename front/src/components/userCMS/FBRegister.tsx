@@ -5,7 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { FBRegisterInput, LoginInput, loginValidation } from './validation';
 import { zodResolver } from '@hookform/resolvers/zod'
 import BasicLoading from '../LoadingScreen/BasicLoading';
-import { signInWithPopup, signInWithEmailAndPassword, GoogleAuthProvider, getAuth } from "firebase/auth"
+import { signInWithPopup, createUserWithEmailAndPassword, GoogleAuthProvider, getAuth, } from "firebase/auth"
+import { googleSignIn } from './authF';
 function FBRegister() {
     const navigate = useNavigate()
     const auth = getAuth()
@@ -13,27 +14,13 @@ function FBRegister() {
         resolver: zodResolver(loginValidation)
     });
     const onSubmit1 = async ({ email, password }: LoginInput) => {
-
         try {
-            await signInWithEmailAndPassword(auth, email, password);
+            await createUserWithEmailAndPassword(auth, email, password);
             navigate("/")
         } catch (error) {
             console.log(error);
-
         }
     }
-
-    const googleSignIn = async () => {
-        try {
-            await signInWithPopup(auth, new GoogleAuthProvider());
-            navigate("/")
-
-        } catch (error) {
-
-        }
-    }
-
-
     return (
         <div>
 
@@ -68,7 +55,7 @@ function FBRegister() {
 
                     <div className='flex-'>
                         <button type="submit" className="btn btn-info mt-3 mr-3">Sing Up</button>
-                        <button type="button" className="btn btn-info" onClick={googleSignIn}>Sing up using google</button>
+                        <button type="button" className="btn btn-info" onClick={() => googleSignIn(auth, navigate)}>Sing up using google</button>
                     </div>
                     <div className="text-sm font-medium text-gray-900 dark:text-white">
                         Already have an account ? <button className="text-blue-600 hover:underline dark:text-blue-500 capitalize"

@@ -37,6 +37,8 @@ router.post("/", async (req, res) => {
     res.status(500).json(error);
   }
 })
+
+
 router.post("/login", async (req, res) => {
   let validBody = ValidLogin(req.body);
   if (validBody.error) {
