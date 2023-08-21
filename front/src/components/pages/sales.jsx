@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import { useEffect } from 'react';
 import { serviceAPI } from '../../../services/apiServices';
 import DropdownButton from '../compos/dropDown';
+import { BASE_URL } from '../../constant';
 const Sales = () => {
   const [sales, setSales] = useState([])
   const [loadning, setLoading] = useState(false)
-  const url = 'http://' + MY_BASE_URL + "/dealClient/list"
+  const url = 'http://' + BASE_URL + "/dealClient/list";
   useEffect(() => {fetchRequest()}, [])
 
   const fetchRequest = async () => {
