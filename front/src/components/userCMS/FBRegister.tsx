@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom';
-import { FBRegisterInput, LoginInput, loginValidation } from './validation';
+import { FBRegisterInput, FBRegisterValidation, LoginInput, loginValidation } from './validation';
 import { zodResolver } from '@hookform/resolvers/zod'
 import BasicLoading from '../LoadingScreen/BasicLoading';
 import { signInWithPopup, createUserWithEmailAndPassword, GoogleAuthProvider, getAuth, } from "firebase/auth"
@@ -11,7 +11,7 @@ function FBRegister() {
     const navigate = useNavigate()
     const auth = getAuth()
     const { register, handleSubmit, formState: { errors } } = useForm<FBRegisterInput>({
-        resolver: zodResolver(loginValidation)
+        resolver: zodResolver(FBRegisterValidation)
     });
     const onSubmit1 = async ({ email, password }: LoginInput) => {
         try {
