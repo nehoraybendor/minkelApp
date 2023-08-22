@@ -2,6 +2,8 @@ import React from 'react'
 import { useEffect, useState } from 'react';
 import DropdownButton from '../compos/dropDown';
 import { BASE_URL } from '../../constant';
+import { HiOutlinePlusCircle } from 'react-icons/hi';
+import Newand from '../compos/newand';
 
 const Doubt = () => {
   const [doubt, setDoubt] = useState([])
@@ -24,6 +26,9 @@ const Doubt = () => {
 
   return (
     <div className='mx-auto  '>
+       <button onClick={() => window.btnaddeal.showModal()}>
+        <HiOutlinePlusCircle className='w-11 h-11 text-gray-500 dark:text-gray-400 mt-12 -mb-20'/>
+      </button>
       <h2 className='text-center text-[50px] mt-2'>DOUBT</h2>
 
       <div className="flex  justify-between my-5">
@@ -122,7 +127,7 @@ const Doubt = () => {
 
 
       </div>
-
+      <Newand/>
     </div>
 
 
