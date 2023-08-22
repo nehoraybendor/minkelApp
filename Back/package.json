@@ -3,24 +3,25 @@
   "version": "1.0.0",
   "description": "The back end of project",
   "scripts": {
-    "start": "node app",
-    "dev": "nodemon app"
+    "start": "node dist/app",
+    "dev": "tsc && nodemon "
   },
   "author": "Nehoray and Konstantin",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.1.0",
-    "cloudinary": "^1.37.0",
+    "bcrypt": "^5.1.1",
+    "cloudinary": "^1.40.0",
     "cors": "^2.8.5",
-    "dotenv": "^16.0.3",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "firebase-admin": "^11.10.1",
-    "joi": "^17.8.3",
-    "jsonwebtoken": "^9.0.0",
-    "mongoose": "^6.9.1",
-    "multer": "^1.4.5-lts.1",
+    "joi": "^17.9.2",
+    "jsonwebtoken": "^9.0.1",
+    "mongoose": "^6.11.6",
+    "multer": "1.4.5-lts.1",
     "multer-storage-cloudinary": "^4.0.0",
-    "nodemon": "^2.0.20",
-    "path": "^0.12.7"
+    "nodemon": "^2.0.22",
+    "path": "^0.12.7",
+    "typescript": "^5.1.6"
   }
 }
