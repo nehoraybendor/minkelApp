@@ -112,10 +112,7 @@ const Sales = () => {
                           </td>
                           <td className="px-6 py-4">
                             {item.amount}
-                          </td>
-                          <td className="px-6 py-4">
-                            {item.time}
-                          </td>
+                          </td>  
                           <td className="px-6 py-4">
                             <button className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</button>
                           </td>

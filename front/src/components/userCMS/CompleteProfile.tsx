@@ -45,7 +45,7 @@ function CompleteProfile() {
             <dialog id="completeProfile" className="modal">
 
                 <form method="dialog2" className="modal-box space-y-3" onSubmit={handleSubmit(onSubmit1)}>
-                    <h2 className='text-center text-[30px] capitalize'>complete you profilee </h2>
+                    <h2 className='text-center text-[30px] capitalize'>Complete you profilee </h2>
                     <button type='button'
                         onClick={() => (window as any).completeProfile.close()}
 
@@ -54,7 +54,7 @@ function CompleteProfile() {
 
                     <div>
                         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Full name</label>
-                        <input type="text" id="firstname" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nehoray"
+                        <input type="text" id="firstname" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             {...register('fullName', {})}
                         />
                         {errors.fullName && <h1 className="text-error p-2 ">{errors.fullName.message}</h1>}
@@ -63,19 +63,19 @@ function CompleteProfile() {
                         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender</label>
                         <div className='flex justify-around capitalize'>
                             <label className="label cursor-pointer space-x-2">
-                                <span className="label-text">male</span>
+                                <span className="label-text">Male</span>
                                 <input type="radio" name="radio-10" className="radio checked:bg-blue-500" onClick={
                                     () => setValue('gender', 'MALE')}
                                 />
                             </label>
                             <label className="label cursor-pointer space-x-2">
-                                <span className="label-text">female</span>
+                                <span className="label-text">Female</span>
                                 <input type="radio" name="radio-10" className="radio checked:bg-blue-500" onClick={
                                     () => setValue('gender', 'FEMALE')
                                 } />
                             </label>
                             <label className="label cursor-pointer space-x-2">
-                                <span className="label-text">other</span>
+                                <span className="label-text">Other</span>
                                 <input type="radio" name="radio-10" className="radio checked:bg-blue-500" onClick={
                                     () => setValue('gender', 'OTHER')
                                 } />
@@ -85,7 +85,7 @@ function CompleteProfile() {
                     </div>
                     <div>
                         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Age</label>
-                        <input type="text" id="lastname" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Bendor"
+                        <input type="text" id="lastname" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
                             {...register('age', { valueAsNumber: true })}
                         />
                         {errors.age && <h1 className="text-error p-2 ">{errors.age.message}</h1>}
