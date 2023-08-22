@@ -1,6 +1,7 @@
 import React from 'react'
 import { useEffect, useState } from 'react';
 import DropdownButton from '../compos/dropDown';
+import { BASE_URL } from '../../constant';
 
 const Doubt = () => {
   const [doubt, setDoubt] = useState([])
@@ -75,26 +76,29 @@ const Doubt = () => {
           }
           `}
               </style>
-              
+
               <div className='grid absolute inset-0 overflow-auto scrollbar'>
 
                 {loadning ? <span className="place-self-center loading loading-spinner loading-lg"></span> :
-                  sales?.map((item, i) => {
+                  doubt?.map((item, i) => {
                     return (
                       <div>
                         <tr key={i} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
 
                           <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {item.product}
+                            {item.name_supplier}
+                          </th>
+                          <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {item.nameProducts}
                           </th>
                           <td className="px-6 py-4">
-                            {item.total_price}
-                          </td>
-                          <td className="px-6 py-4">
-                            {item.sum}
+                            {item.price}
                           </td>
                           <td className="px-6 py-4">
                             {item.amount}
+                          </td>
+                          <td className="px-6 py-4">
+                            {item.total_price}
                           </td>
                           <td className="px-6 py-4">
                             {item.time}
