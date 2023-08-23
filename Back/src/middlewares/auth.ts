@@ -3,10 +3,11 @@ const { config } = require("../config/secret");
 
 const extractTokenFromHeaders = (req) => {
   const [type, token] = req.header("Authorization").split(" ") ?? [];
-
+ 
   return type === "Bearer" ? token : undefined;
 }
 
+   
 
 exports.auth = (req, res, next) => {
   const token = extractTokenFromHeaders(req)

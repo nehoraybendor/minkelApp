@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "The back end of project",
   "scripts": {
-    "start": "node dist/app",
-    "dev": "tsc && nodemon "
+    "start": "tsc && node dist/app",
+    "dev": "nodemon -e js,ts --watch ./src --ignore node_modules --exec \"npm start\""
   },
   "author": "Nehoray and Konstantin",
   "license": "ISC",

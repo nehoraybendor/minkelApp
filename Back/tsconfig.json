@@ -3,6 +3,7 @@
     "module": "commonjs",
     "target": "esnext",
     "moduleResolution": "node",
+    "skipLibCheck": true,
     "sourceMap": true,
     "outDir": "dist",
     "allowJs": true,
