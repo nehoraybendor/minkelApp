@@ -50,7 +50,7 @@ const TodoList = () => {
         <input
           name='newgoal'
           type="text"
-          className="input input-bordered w-full max-w-xs bg-white"
+          className="input input-bordered w-full max-w-xs bg-white text-black"
           placeholder="Enter a task..."
           value={inputValue}
           onChange={handleInputChange}

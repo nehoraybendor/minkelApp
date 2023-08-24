@@ -9,7 +9,7 @@ router.get("/", async(req,res) => {
 })
 router.get('/list', auth, async (req, res) => {
   try {
-    const workers = await workerModel.find({});
+    const workers = await workerModel.find({}); 
     res.status(200).json({ workers })
   } catch (error) {
     res.status(500).json({ error: error.message })

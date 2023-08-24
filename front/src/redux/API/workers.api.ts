@@ -1,13 +1,21 @@
+import { WorkerEntity } from "../interfaces/workers";
 import { mainApi } from "./main.api";
 
-// ! we stop here because of auth is not working now !
+
 
 const workersAPI = mainApi.injectEndpoints({
+   
     endpoints: (build) => ({
-        findAllWorkers: build.query<Worker[], number>({
+        
+        findAllWorkers: build.query<WorkerEntity[], number>({
             query: (page) => ({
-                url:'workers/'
-            })
-        })
+                url:'workers/list',
+                method: 'GET',
+            }),
+            providesTags:["Worker"]
+        }),
+        
     })
 })
+
+export const {useFindAllWorkersQuery} = workersAPI

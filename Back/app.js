@@ -4,8 +4,8 @@ const http = require("http");
 const cors = require("cors");
 const { initializeApp } = require('firebase-admin/app');
 const cred = require('./cred.json');
-const { routesInit } = require("./routers/configRoutes")
-require("./db/mongoConnect")
+const { routesInit } = require("./src/routers/configRoutes")
+require("./src/db/mongoConnect")
 
 
 var admin = require("firebase-admin");
@@ -18,6 +18,8 @@ const app = express();
 app.use(cors());
 // מגדיר לשרת שהוא יכול לקבל מידע מסוג ג'ייסון בבאדי בבקשות שהם לא גט
 app.use(express.json());
+
+
 
 // דואג שתקיית פאבליק כל הקבצים בה יהיו חשופים לצד לקוח
 app.use(express.static(path.join(__dirname, "public")));
@@ -32,5 +34,7 @@ const server = http.createServer(app);
 // אנסה לבדוק אם אנחנו על שרת אמיתי ויאסוף את הפורט משם אם לא ואנחנו לוקאלי יעבוד על 3002
 let port = process.env.PORT || 8595;
 // הפעלת השרת והאזנה לפורט המבוקש
-server.listen(port);
+server.listen(port,()=>{
+    console.log("listening on port " + port);
+});
 

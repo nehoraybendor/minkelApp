@@ -4,5 +4,6 @@ import { BASE_URL  } from '../../constant'
 export const mainApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: BASE_URL +'/'}),
     endpoints: () => ({}),
+    tagTypes: ['Worker', 'User'],
 })
 
