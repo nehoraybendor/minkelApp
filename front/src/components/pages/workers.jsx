@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
-
+import { HiOutlinePlusCircle } from "react-icons/hi";
 import WorkInfo from './workInfo'
 import { BASE_URL } from '../../constant'
-import Newand from '../compos/newand';
-import { HiOutlinePlusCircle } from 'react-icons/hi2';
+import AddWorker from '../compos/addWorker';
 const Workers = () => {
   const [sales, setSales] = useState([])
   const [loadning, setLoading] = useState(false)
@@ -26,7 +25,9 @@ const Workers = () => {
   
   return (
     <div className='mx-auto'>
-    
+    <button onClick={() => window.btnadworker.showModal()}>
+        <HiOutlinePlusCircle className='w-14 h-14 text-gray-500 dark:text-gray-400 mt-12 -mb-20 mr-[400px]'/>
+    </button>
       <h2 className='text-center text-[50px] mt-2'>WORKER</h2>
       <div className="flex flex-row flex-wrap justify-center mx-[32px]">
   {loadning ? (
@@ -59,7 +60,7 @@ const Workers = () => {
   )}
 </div>
 
-
+<AddWorker/>
 
       </div>
 
