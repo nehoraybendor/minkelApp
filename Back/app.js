@@ -4,8 +4,8 @@ const http = require("http");
 const cors = require("cors");
 const { initializeApp } = require('firebase-admin/app');
 const cred = require('./cred.json');
-const { routesInit } = require("./src/routers/configRoutes")
-require("./src/db/mongoConnect")
+const { routesInit, mainRouter } = require("./src/routers/configRoutes")
+const { initDB } = require("./src/db/mongoConnect")
 
 
 var admin = require("firebase-admin");
@@ -13,6 +13,7 @@ const fb = initializeApp({
     credential: admin.credential.cert(cred)
 });
 
+initDB()
 const app = express();
 // מאפשר גם לדומיין שלא קשור לשרת לבצע בקשה 
 app.use(cors());
@@ -28,13 +29,15 @@ app.use(express.static(path.join(__dirname, "public")));
 // צד שרת שלנו
 routesInit(app);
 
+app.use(mainRouter)
+
 // הגדרת שרת עם יכולות אפ שמייצג את האקספרס
 const server = http.createServer(app);
 // משתנה שיגדיר על איזה פורט אנחנו נעבוד
 // אנסה לבדוק אם אנחנו על שרת אמיתי ויאסוף את הפורט משם אם לא ואנחנו לוקאלי יעבוד על 3002
 let port = process.env.PORT || 8595;
 // הפעלת השרת והאזנה לפורט המבוקש
-server.listen(port,()=>{
+server.listen(port, () => {
     console.log("listening on port " + port);
 });
 
