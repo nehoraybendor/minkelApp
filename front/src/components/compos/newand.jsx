@@ -48,7 +48,7 @@ const Newand = () => {
                             {...register('time', {})}
                             required />
                     </div>
-<button></button>
+                    <button type='submit' className='btn btn-info mt-1' >Save</button>
 
                 </form>
 
