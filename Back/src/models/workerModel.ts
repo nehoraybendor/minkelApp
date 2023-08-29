@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import { config } from '../config/secret'
 
 const workerSchema = new mongoose.Schema({
+    _id:String,
     name: String,
     email: String,
     img_profil: {

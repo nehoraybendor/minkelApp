@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import { BASE_URL } from '../../constant'
 import { useFindAllWorkersQuery } from '../../redux/API/workers.api';
+import { HiOutlinePlusCircle } from "react-icons/hi";
+import AddWorker from '../compos/addWorker';
+
 const Workers = () => {
 
   const { isError, isLoading, isSuccess, error, data: workers } = useFindAllWorkersQuery(0)
   const [sales, setSales] = useState([])
   const [loadning, setLoading] = useState(false)
   const url = 'http://' + BASE_URL + "/dealClient/list";
-  if(isError && error) console.log(error);
-  
+  if (isError && error) console.log(error);
+
 
 
 
 
   return (
     <div className='mx-auto'>
-
+      <button onClick={() => (window as any ).btnadworker.showModal()}>
+        <HiOutlinePlusCircle className='w-14 h-14 text-gray-500 dark:text-gray-400 mt-12 -mb-20 mr-[400px]' />
+      </button>
       <h2 className='text-center text-[50px] mt-2'>WORKER</h2>
       <div className="flex flex-row flex-wrap justify-center mx-[32px]">
         {loadning ? (
@@ -48,7 +53,7 @@ const Workers = () => {
         )}
       </div>
 
-
+<AddWorker/>
 
     </div>
 

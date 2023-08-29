@@ -3,7 +3,10 @@ const Joi = require("joi");
 const jwt = require("jsonwebtoken");
 require('dotenv').config()
 const userSchema = new mongoose.Schema({
-    uid: String,
+    uid: { 
+        type: String,
+        required: true
+     },
     fullName: String,
     date_created: {
         type: Date, default: Date.now
@@ -15,19 +18,19 @@ const userSchema = new mongoose.Schema({
         ref: 'goals'
     }]
 })
-exports.UserModel = mongoose.model("users", userSchema);
+export const UserModel = mongoose.model("users", userSchema);
 
-exports.createToken = (user_id) => {
+export const createToken = (user_id) => {
     console.log(process.env.TOKENSECRET)
     let token = jwt.sign({ _id: user_id }, process.env.TOKENSECRET, { expiresIn: "600mins" });
     return token;
 }
-exports.ValidUser = (reqBody) => {
+export const ValidUser = (reqBody) => {
     let joiSchema = Joi.object({
         uid: Joi.string(),
         fullName: Joi.string().min(1).max(30).required(),
         age: Joi.number().min(18).max(120).required(),
-        gender: Joi.string().required().valid('MALE','FEMALE','OTHER'),
+        gender: Joi.string().required().valid('MALE', 'FEMALE', 'OTHER'),
     })
     return joiSchema.validate(reqBody);
 }
