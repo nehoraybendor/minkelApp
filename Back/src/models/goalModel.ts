@@ -1,8 +1,7 @@
-const mongoose=require("mongoose");
-const Joi=require("joi");
+import mongoose from "mongoose";
+import Joi from "joi";
 
-
-const goalSchema=new mongoose.Schema({
+const goalSchema = new mongoose.Schema({
     date: {
         type: String,
     },
@@ -16,7 +15,7 @@ const goalSchema=new mongoose.Schema({
         type: String,
     },
     user_id: {
-          type: mongoose.Types.ObjectId,
+        type: mongoose.Types.ObjectId,
         ref: 'users'
     },
     isCompleted: {
@@ -28,25 +27,25 @@ const goalSchema=new mongoose.Schema({
         default: (new Date(Date.now() + 2 * 60 * 60 * 1000))
     },
     isActive: {
-        type:Boolean,
-      default:true
+        type: Boolean,
+        default: true
     }
 })
 
-exports.goalModel=mongoose.model("goals",goalSchema);
+export const goalModel = mongoose.model("goals", goalSchema);
 
 
-exports.ValidGoal=(reqBody)=>{
+export const ValidGoal = (reqBody) => {
     let joiSchema = Joi.object({
         date: Joi.string().required(),
         time: Joi.string().required(),
         title: Joi.string().min(2).max(255).required(),
         description: Joi.string().min(2).max(1000).required(),
-        user_id:Joi.string().required()
+        user_id: Joi.string().required()
     });
     return joiSchema.validate(reqBody);
 }
-exports.validateGoalUpdate = (reqBody) => {
+export const validateGoalUpdate = (reqBody) => {
     let joiSchema = Joi.object({
         date: Joi.string().allow(),
         time: Joi.string().allow(),

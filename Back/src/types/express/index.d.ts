@@ -8,7 +8,5 @@ declare global {
             tokenData?: jwt.JwtPayload
 
         }
-        
     }
-    
 }
