@@ -26,11 +26,11 @@ const Header = () => {
                 </div>
                 <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                     <div className='p-3 text-info'>
-                        <p className=' text-center text-lg '>{auth.currentUser?.displayName ?? (claimes as any)?.fullName ?? " user"}</p>
+                        <p className=' text-center text-lg '>{auth.currentUser?.displayName ?? (claimes as any)?.fullName ?? "מנהל"}</p>
                         <p className=' text-center text-sm '>{auth?.currentUser?.email}</p>
                     </div>
                     <hr />
-                    <li><a>Show Profil</a></li>
+                    <li><a>Change password</a></li>
                     <li onClick={async () => await signOut(auth)}><a>Logout</a></li>
                 </ul>
             </div>
