@@ -5,8 +5,8 @@ import { HTTPException } from "../middlewares/Errors/HTTPException";
 
 export const findWorkers: RequestHandler = async (req, res, next) => {
     try {
-      
-        const workers = await workerModel.find( {});
+
+        const workers = await workerModel.find({});
         res.status(200).json({ workers })
     } catch (error) {
         next(error)
@@ -15,8 +15,8 @@ export const findWorkers: RequestHandler = async (req, res, next) => {
 export const findUnique: RequestHandler = async (req, res, next) => {
     try {
         const id = req.params?.id
-        const workers = await workerModel.findOne( { _id: id } );
-        if(!workers)throw new HTTPException(404, "Workers not found")
+        const workers = await workerModel.findOne({ _id: id });
+        if (!workers) throw new HTTPException(404, "Workers not found")
         res.status(200).json({ workers })
     } catch (error) {
         next(error)
@@ -24,7 +24,7 @@ export const findUnique: RequestHandler = async (req, res, next) => {
 }
 export const createWorker: RequestHandler = async (req, res, next) => {
     try {
-        const {value,error} = validateWorker({ ...req.body});
+        const { value, error } = validateWorker({ ...req.body });
         if (error) throw error;
         const worker = await workerModel.create(value);
         res.status(200).json({ worker })
@@ -39,24 +39,20 @@ export const editWorker: RequestHandler = async ({ body, tokenData, params }, re
         if (error) throw error
 
         const updatedWorker = await workerModel.findOneAndUpdate({ _id: params.id }, value, { new: true });
-        // if (!updatedWorker) {
-        //     return res.status(404).json({ message: "Worker not found" });
-        // }
+        if (!updatedWorker) throw new HTTPException(404, "Workers not found")
 
         res.status(200).json(updatedWorker);
     } catch (error) {
         next(error)
     }
 }
-export const deleteWorker: RequestHandler = async (req, res) => {
+export const deleteWorker: RequestHandler = async (req, res, next) => {
     try {
-        const worker = await workerModel.findByIdAndDelete({ _id: req.params.id, user_id: req.tokenData._id })
-        if (!worker) {
-            return res.status(404).json({ message: "Worker not found or you do not have permission" });
-        }
+        const deletedWorker = await workerModel.findByIdAndDelete({ _id: req.params.id, user_id: req.tokenData._id })
+        if (!deletedWorker) throw new HTTPException(404, "Worker not found");
 
-        res.status(200).json({ message: "Worker deleted", worker });
+        res.status(200).json({ message: "Worker deleted", deletedWorker });
     } catch (error) {
-        res.status(500).json({ error: error.message })
+        next(error)
     }
 }

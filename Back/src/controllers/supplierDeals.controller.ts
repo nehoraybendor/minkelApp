@@ -1,25 +1,19 @@
 import { RequestHandler } from "express"
-import { dealSupplierModel, ValidDealssupplier, ValidDealssupplierUpdate } from "../models/dealSupplierModel"
+import { dealSupplierModel, validateDSupplier } from "../models/dealSupplierModel"
 
-export const findeSDeals: RequestHandler = async (req, res) => {
+export const findeSDeals: RequestHandler = async ({ tokenData }, res, next) => {
     try {
-        const deals = await dealSupplierModel.find({ user_id: req.tokenData._id });
-        res.json(deals);
+        const deals = await dealSupplierModel.find({ created_by: tokenData.sub });
+        res.status(200).json(deals)
     } catch (error) {
-        console.log(error);
-        res.status(500).json(error);
+        next(error)
     }
 }
-export const createSDeal: RequestHandler = async (req, res) => {
-    const dealObj = req.body;
-    dealObj.user_id = req.tokenData._id;
-    const validBody = ValidDealssupplier(req.body);
-    if (validBody.error) {
-        return res.status(400).json(validBody.error.details);
-    }
-
+export const createSDeal: RequestHandler = async ({body,tokenData}, res) => {
+    const {error,value} = validateDSupplier(body);
+    if(error) throw error
     try {
-        const deal = new dealSupplierModel(req.body);
+        const deal = new dealSupplierModel({...body,});
         deal.total_price = deal.price * deal.amount;
         await deal.save();
         res.status(201).json(deal);

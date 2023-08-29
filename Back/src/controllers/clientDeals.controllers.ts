@@ -1,5 +1,5 @@
 import { RequestHandler } from "express"
-import { ValidDealUpdate,ValidDealclient,dealClientModel} from "../models/dealClientModel"
+import { validateDClient,dealClientModel} from "../models/dealClientModel"
 import { UserModel } from "../models/userModel";
 
 export const findCdeal: RequestHandler = async (req, res) => {
@@ -17,7 +17,7 @@ export const findCdeal: RequestHandler = async (req, res) => {
 export const createCDeal: RequestHandler = async (req, res) => {
     const dealObj = req.body;
     dealObj.user_id = req.tokenData._id;
-    let validBody = ValidDealclient(dealObj);
+    let validBody = validateDClient(dealObj);
     if (validBody.error) {
         return res.status(400).json(validBody.error.details);
     }
@@ -35,7 +35,7 @@ export const createCDeal: RequestHandler = async (req, res) => {
 
 export const editCDeal: RequestHandler = async (req, res) => {
     const dealId = req.params.dealId;
-    const validBody = ValidDealUpdate(req.body);
+    const validBody = validateDClient(req.body);
     if (validBody.error) {
         return res.status(400).json(validBody.error.details);
     }
