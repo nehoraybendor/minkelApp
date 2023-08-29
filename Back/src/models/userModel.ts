@@ -1,12 +1,12 @@
-const mongoose = require("mongoose");
-const Joi = require("joi");
-const jwt = require("jsonwebtoken");
-require('dotenv').config()
+import mongoose from "mongoose";
+import Joi from "joi";
+import jwt from "jsonwebtoken";
+
 const userSchema = new mongoose.Schema({
-    uid: { 
+    uid: {
         type: String,
         required: true
-     },
+    },
     fullName: String,
     date_created: {
         type: Date, default: Date.now

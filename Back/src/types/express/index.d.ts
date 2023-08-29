@@ -6,7 +6,8 @@ declare global {
     namespace Express {
         interface Request {
             tokenData?: jwt.JwtPayload
-
+            
         }
+      
     }
 }

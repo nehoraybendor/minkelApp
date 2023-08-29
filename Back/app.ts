@@ -1,16 +1,17 @@
-const express = require("express");
-const path = require("path");
-const http = require("http");
-const cors = require("cors");
-const { initializeApp } = require('firebase-admin/app');
-const cred = require('./cred.json');
-const { routesInit, mainRouter } = require("./src/routers/configRoutes")
-const { initDB } = require("./src/db/mongoConnect")
-
-
-var admin = require("firebase-admin");
+import express from "express";
+import path from "path";
+import http from "http";
+import cors from "cors";
+import { initializeApp } from 'firebase-admin/app';
+import cred from './cred.json';
+import { mainRouter } from "./src/routers/configRoutes"
+import { initDB } from "./src/db/mongoConnect"
+import admin from 'firebase-admin'
+import dotenv from 'dotenv'
+import { mainErrorHandler } from './src/middlewares/Errors/errorHandler'
+dotenv.config()
 const fb = initializeApp({
-    credential: admin.credential.cert(cred)
+    credential: admin.credential.cert((cred as any))
 });
 
 initDB()
@@ -22,14 +23,14 @@ app.use(express.json());
 
 
 
+
 // דואג שתקיית פאבליק כל הקבצים בה יהיו חשופים לצד לקוח
 app.use(express.static(path.join(__dirname, "public")));
 
-// פונקציה שמגדירה את כל הראוטים הזמנים באפליקציית
-// צד שרת שלנו
-routesInit(app);
+
 
 app.use(mainRouter)
+app.use(mainErrorHandler)
 
 // הגדרת שרת עם יכולות אפ שמייצג את האקספרס
 const server = http.createServer(app);

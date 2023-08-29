@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
+    "strict": false,
     "module": "commonjs",
     "target": "esnext", 
     "moduleResolution": "node",
     "skipLibCheck": true,
     "sourceMap": true,
     "esModuleInterop":true,
+    "resolveJsonModule": true,
     "outDir": "dist",
     "allowJs": true,
     "lib": ["dom", "es6"],
@@ -21,11 +23,11 @@
     "dist"
   ],
   "include": [
-    "*.ts",
+    "src/**/*.ts",
     "src/**/*.d.ts",
     "tests/**/*.spec.ts"
   ],
   "files": [
-    "app.js"
+    "app.ts"
   ]
 }

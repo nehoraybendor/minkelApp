@@ -1,9 +1,10 @@
 import { RequestHandler } from "express"
 import { ValidGoal, goalModel } from "../models/goalModel";
-import { UserModel } from "@/models/userModel";
+import { UserModel } from "../models/userModel";
 
 export const findGoals: RequestHandler = async (req, res) => {
     try {
+        
         const todo = await goalModel.find({ user_id: req.tokenData._id, isActive: true })
         res.status(200).json(todo);
     } catch (error) {
@@ -32,8 +33,8 @@ export const createGoal: RequestHandler = async (req, res) => {
     }
     try {
         let goal = new goalModel(goalObj);
-        let user = await UserModel.findById(req.tokenData._id);
-        user.goals.push(goal._id);
+        let user = await UserModel.findById(req.tokenData.sub);
+        user.goals.push(goal.id);
         await user.save()
         await goal.save()
         res.status(201).json(goal)
@@ -59,3 +60,4 @@ export const deleteGoal: RequestHandler = async (req, res) => {
         return res.status(500).json({ err_msg: err });
     }
 }
+

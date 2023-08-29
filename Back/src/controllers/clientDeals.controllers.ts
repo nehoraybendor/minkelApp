@@ -1,6 +1,6 @@
 import { RequestHandler } from "express"
 import { ValidDealUpdate,ValidDealclient,dealClientModel} from "../models/dealClientModel"
-import { UserModel } from "@/models/userModel";
+import { UserModel } from "../models/userModel";
 
 export const findCdeal: RequestHandler = async (req, res) => {
     async (req, res) => {
@@ -26,7 +26,7 @@ export const createCDeal: RequestHandler = async (req, res) => {
         const deal = new dealClientModel(req.body);
         deal.total_price = deal.sum * deal.amount;
         await deal.save();
-        res.status(201).json({ deal, userName: user.name });
+        res.status(201).json({ deal, userName: user.fullName });
     } catch (error) {
         console.log(error);
         res.status(500).json(error);

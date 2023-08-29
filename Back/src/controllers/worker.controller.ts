@@ -1,50 +1,50 @@
 import type { RequestHandler } from "express"
-import { validateUpdateWorker, validateWorker, workerModel } from "../models/workerModel"
+import { validateWorker, workerModel } from "../models/workerModel"
+import { HTTPException } from "../middlewares/Errors/HTTPException";
 
 
-export const findWorkers: RequestHandler = async (req, res) => {
+export const findWorkers: RequestHandler = async (req, res, next) => {
     try {
-        const id = req.params?.id
-        const workers = await workerModel.find(id ? { _id: id } : {});
+      
+        const workers = await workerModel.find( {});
         res.status(200).json({ workers })
     } catch (error) {
-        res.status(500).json({ error: error.message })
+        next(error)
     }
 }
-export const createWorker: RequestHandler = async (req, res) => {
+export const findUnique: RequestHandler = async (req, res, next) => {
     try {
-        // ! const result = req.file //??
-        // console.log(result)
-        const workerObj = req.body;
-        workerObj.user_id = req.tokenData._id;
-        const validWorker = validateWorker(workerObj);
-        if (validWorker.error) {
-            return res.status(400).json({ error: validWorker.error.details[0].message })
-        }
-        const worker = await workerModel.create(workerObj);
+        const id = req.params?.id
+        const workers = await workerModel.findOne( { _id: id } );
+        res.status(200).json({ workers })
+    } catch (error) {
+        next(error)
+    }
+}
+export const createWorker: RequestHandler = async (req, res, next) => {
+    try {
+        const {value,error} = validateWorker({ ...req.body});
+        if (error) throw error;
+        const worker = await workerModel.create(value);
         res.status(200).json({ worker })
     } catch (error) {
-        res.status(500).json({ error: error.message })
+        next(error)
     }
 }
 
-export const editWorker: RequestHandler = async (req, res) => {
+export const editWorker: RequestHandler = async ({ body, tokenData, params }, res, next) => {
     try {
-        const workerObj = req.body;
-        workerObj.user_id = req.tokenData._id;
-        const validWorker = validateUpdateWorker(workerObj)
-        if (validWorker.error) {
-            return res.status(400).json({ error: validWorker.error.details[0].message })
-        }
+        const { value, error } = validateWorker({ ...body }, true)
+        if (error) throw error
 
-        const updatedWorker = await workerModel.findByIdAndUpdate(req.params.id, workerObj);
-        if (!updatedWorker) {
-            return res.status(404).json({ message: "Worker not found" });
-        }
+        const updatedWorker = await workerModel.findOneAndUpdate({ _id: params.id }, value, { new: true });
+        // if (!updatedWorker) {
+        //     return res.status(404).json({ message: "Worker not found" });
+        // }
 
-        res.status(200).json(workerObj);
+        res.status(200).json(updatedWorker);
     } catch (error) {
-        res.status(500).json({ error: error.message })
+        next(error)
     }
 }
 export const deleteWorker: RequestHandler = async (req, res) => {

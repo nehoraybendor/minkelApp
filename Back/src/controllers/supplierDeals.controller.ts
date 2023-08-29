@@ -28,4 +28,3 @@ export const createSDeal: RequestHandler = async (req, res) => {
         res.status(500).json(error);
     }
 }
-}

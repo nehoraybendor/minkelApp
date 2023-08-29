@@ -1,10 +1,10 @@
 import { Router } from "express";
-const { auth } = require("../middlewares/auth");
-
+import { ValidDealssupplier, ValidDealssupplierUpdate, dealSupplierModel, } from "../models/dealSupplierModel"
+import { authGuard } from "../middlewares/auth"
 const router = Router()
-  .get("/", auth,)
-  .post("/", auth,)
-  .put("/:dealId", auth, async (req, res) => {
+  .get("/", authGuard,)
+  .post("/", authGuard,)
+  .put("/:dealId", authGuard, async (req, res) => {
     const dealId = req.params.dealId;
     const validBody = ValidDealssupplierUpdate(req.body);
     if (validBody.error) {
@@ -32,7 +32,7 @@ const router = Router()
     }
   });
 
-router.delete("/:dealId", auth, async (req, res) => {
+router.delete("/:dealId", authGuard, async (req, res) => {
   const dealId = req.params.dealId;
   try {
     const deal = await dealSupplierModel.findById(dealId);
@@ -53,4 +53,4 @@ router.delete("/:dealId", auth, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

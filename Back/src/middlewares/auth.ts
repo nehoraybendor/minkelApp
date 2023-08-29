@@ -20,6 +20,8 @@ export const authGuard: RequestHandler = async (req, res, next) => {
   }
   try {
     (req as AuthedRequset).tokenData = await auth().verifyIdToken(token)
+    next()
+    
   }
   catch (error) {
     console.log(error);
