@@ -16,6 +16,7 @@ export const findUnique: RequestHandler = async (req, res, next) => {
     try {
         const id = req.params?.id
         const workers = await workerModel.findOne( { _id: id } );
+        if(!workers)throw new HTTPException(404, "Workers not found")
         res.status(200).json({ workers })
     } catch (error) {
         next(error)
