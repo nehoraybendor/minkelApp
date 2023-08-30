@@ -1,5 +1,5 @@
 import { RequestHandler } from "express"
-import { ValidGoal, goalModel } from "../models/goalModel";
+import { validateGoal, goalModel } from "../models/goalModel";
 import { UserModel } from "../models/userModel";
 
 export const findGoals: RequestHandler = async (req, res) => {
@@ -27,7 +27,7 @@ export const findeAchivedGoals: RequestHandler = async (req, res) => {
 export const createGoal: RequestHandler = async (req, res) => {
     const goalObj = req.body;
     goalObj.user_id = req.tokenData._id;
-    let validBody = ValidGoal(goalObj);
+    let validBody = validateGoal(goalObj);
     if (validBody.error) {
         return res.status(400).json(validBody.error.details);
     }

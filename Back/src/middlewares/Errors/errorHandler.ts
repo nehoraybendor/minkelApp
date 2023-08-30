@@ -16,7 +16,7 @@ export const mainErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     } else if (err instanceof ValidationError) {
         res.status(400).json(process.env.NODE_ENV === 'development' ? { error: err.details } : {})
     } else if (err instanceof Error.CastError ) {
-        res.status(400).json({error:"invalid id passed at parameter /:id"})
+        res.status(400).json({error: new HTTPException(400,"invalid id passed at parameter /:id")})
 
     } else {
         res.status(500).json({

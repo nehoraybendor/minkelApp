@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 import Joi from "joi";
 
 const goalSchema = new mongoose.Schema({
+
+    //  להוסיף ID 
     date: {
         type: String,
     },
@@ -35,22 +37,13 @@ const goalSchema = new mongoose.Schema({
 export const goalModel = mongoose.model("goals", goalSchema);
 
 
-export const ValidGoal = (reqBody) => {
+export const validateGoal = (reqBody:any,AllOptional?:boolean ) => {
     let joiSchema = Joi.object({
-        date: Joi.string().required(),
-        time: Joi.string().required(),
-        title: Joi.string().min(2).max(255).required(),
-        description: Joi.string().min(2).max(1000).required(),
-        user_id: Joi.string().required()
+        date: Joi.string(),
+        time: Joi.string(),
+        title: Joi.string().min(2).max(255),
+        description: Joi.string().min(2).max(1000),
+        user_id: Joi.string()
     });
-    return joiSchema.validate(reqBody);
-}
-export const validateGoalUpdate = (reqBody) => {
-    let joiSchema = Joi.object({
-        date: Joi.string().allow(),
-        time: Joi.string().allow(),
-        title: Joi.string().min(2).max(255).allow(),
-        description: Joi.string().min(2).max(1000).allow()
-    });
-    return joiSchema.validate(reqBody);
+    return joiSchema.options(AllOptional?{}:{presence:"required"}).validate(reqBody);
 }
