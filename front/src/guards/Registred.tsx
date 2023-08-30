@@ -3,7 +3,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { useLocation, useNavigate } from 'react-router-dom'
 import CompleteProfile from '../components/userCMS/CompleteProfile'
 import { useDispatch } from 'react-redux'
-import { setTokenData } from '../redux/slice/user.slice'
+import { setToken, setTokenData } from '../redux/slice/user.slice'
 
 interface props {
     children: React.ReactNode
@@ -23,9 +23,11 @@ const Registred: FC<props> = ({ children }) => {
                 await user?.getIdTokenResult(true)
             }
             const tokendata = await user?.getIdTokenResult()
+            const token = await user?.getIdToken()
             console.log(tokendata);
             if (!tokendata?.claims.fullName) (window as any).completeProfile.showModal()
             dispatch(setTokenData(tokendata))
+            dispatch(setToken(token))
             setLoading(false)
         })
         return () => unsubObserver();

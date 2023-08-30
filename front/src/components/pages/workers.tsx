@@ -34,7 +34,7 @@ const Workers = () => {
                 workers.map((worker, i) => (
                   <div className="card card-side bg-base-100 shadow-xl h-[200px] w-[300px] m-[20px]" key={i}>
                     <figure>
-                      <img className="w-[200px]" src={worker.img_profil} alt="Worker" />
+                      <img className="w-[200px]" src={worker.profile_url} alt="Worker" />
                     </figure>
                     <div className="card-body">
                       <h2 className="card-title">{worker.name}</h2>

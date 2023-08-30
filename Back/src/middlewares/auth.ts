@@ -7,7 +7,7 @@ export interface AuthedRequset extends Request {
 }
 
 const extractTokenFromHeaders = (req: Request) => {
-  const [type, token] = req.header("Authorization").split(" ") ?? [];
+  const [type, token] = req.header("Authorization")?.split(" ") ?? [];
   return type === "Bearer" ? token : undefined;
 }
 
