@@ -1,12 +1,13 @@
 export interface WorkerEntity {
+    _id?: string;
     name: string,
     email: string,
-    img_profil: string,
+    profile_url: string,
     date_created: string
     age: number,
     gender: string,
     phone_number: string,
     address: string,
     salary: number
-    user_id: string
+    created_by: string
 }
