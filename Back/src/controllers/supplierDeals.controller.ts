@@ -14,7 +14,7 @@ export const createSDeal: RequestHandler = async ({body,tokenData}, res) => {
     if(error) throw error
     try {
         const deal = new dealSupplierModel({...body,});
-        deal.total_price = deal.price * deal.amount;
+      
         await deal.save();
         res.status(201).json(deal);
     } catch (error) {

@@ -1,6 +1,6 @@
 import { authGuard } from "../middlewares/auth";
 import { Router } from "express"
-import { createGoal, deleteGoal, findGoals, findeAchivedGoals } from "../controllers/goals.controllers"
+import { createGoal, deleteGoal, findGoals, findeAchivedGoals } from "../controllers/goals.controller"
 const router = Router();
 
 router

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { findCdeal, createCDeal, deleteCDeal, editCDeal, } from "../controllers/clientDeals.controllers"
+import { findCdeal, createCDeal, deleteCDeal, editCDeal, } from "../controllers/clientDeals.controller"
 const { UserModel } = require("../models/userModel")
 import { authGuard } from "../middlewares/auth"
 const router = Router()

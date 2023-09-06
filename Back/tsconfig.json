@@ -12,11 +12,7 @@
     "allowJs": true,
     "lib": ["dom", "es6"],
     "baseUrl": "./src",
-    "paths": {
-      "@/*": [
-        "./*"
-      ]
-    }
+  
   },
   "exclude": [
     "node_modules",

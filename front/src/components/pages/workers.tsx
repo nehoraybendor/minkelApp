@@ -10,7 +10,7 @@ const Workers = () => {
 
   if (isError && error) console.log(error);
 
-  console.log(workers);
+
 
 
 
@@ -25,7 +25,8 @@ const Workers = () => {
         {isLoading ?
 
           <span className="place-self-center loading loading-spinner loading-lg"></span>
-          : workers && isSuccess && workers?.map((worker, i) => (
+          : workers && isSuccess &&
+          workers?.map((worker, i) => (
             <div className="flex flex-row flex-wrap justify-center mx-[32px]">
 
               <div className="card card-side bg-base-100 shadow-xl h-[200px] w-[300px] m-[20px]" key={i}>

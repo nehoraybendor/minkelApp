@@ -4,7 +4,7 @@ import { DBEntity } from "./global";
 export type WorkerEntity = z.infer<typeof WorkerSchema>
 
 export const WorkerSchema = z.object({
-    name: z.string().min(2).max(30).regex(/^[0-9a-zA-Z ]*$/),
+    name: z.string().min(2).max(30).regex(/^[a-zA-Z ]*$/),
     email: z.string().email(),
     profil_url: z.string().min(3).max(5000),
     age: z.number().min(16).max(120),
