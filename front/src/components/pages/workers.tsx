@@ -17,7 +17,7 @@ const Workers = () => {
 
   return (
     <div className='mx-auto'>
-      <button onClick={() => (window as any).btnadworker.showModal()}>
+      <button onClick={() => window.addWorker.showModal()}>
         <HiOutlinePlusCircle className='w-14 h-14 text-gray-500 dark:text-gray-400 mt-12 -mb-20 mr-[400px]' />
       </button>
       <h2 className='text-center text-[50px] mt-2'>WORKER</h2>
@@ -30,7 +30,7 @@ const Workers = () => {
 
               <div className="card card-side bg-base-100 shadow-xl h-[200px] w-[300px] m-[20px]" key={i}>
                 <figure>
-                  <img className="w-[200px]" src={worker.profile_url} alt="Worker" />
+                  <img className="w-[200px]" src={worker.profil_url} alt="Worker" />
                 </figure>
                 <div className="card-body">
                   <h2 className="card-title">{worker.name}</h2>

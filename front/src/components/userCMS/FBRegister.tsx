@@ -32,7 +32,7 @@ function FBRegister() {
                     <h2 className='text-center text-[30px] capitalize'>register</h2>
                     <button
                         type='button'
-                        onClick={() => (window as any).FBRegister.close()}
+                        onClick={() => window.FBRegister.close()}
                         className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                     {/* <form className="mt-8 space-y-4 p-4" > */}
                     <div>
@@ -62,8 +62,8 @@ function FBRegister() {
                     <div className="text-sm font-medium text-gray-900 dark:text-white">
                         Already have an account ? <button className="text-blue-600 hover:underline dark:text-blue-500 capitalize"
                             onClick={() => {
-                                (window as any).login.showModal();
-                                (window as any).FBRegister.close();
+                              window.login.showModal();
+                              window.FBRegister.close();
                             }}
                         >signIn</button>
                     </div>

@@ -2,10 +2,7 @@ import mongoose, { Types } from 'mongoose';
 import Joi, { required } from 'joi';
 
 const workerSchema = new mongoose.Schema({
-    _id: {
-        type: Types.ObjectId,
-        default: new Types.ObjectId()
-    },
+  
     name: String,
     email: String,
     profil_url: String,
@@ -29,7 +26,7 @@ const workerSchema = new mongoose.Schema({
 export const workerModel = mongoose.model("workers", workerSchema);
 
 const validationSchema = Joi.object({
-    name: Joi.string().alphanum().min(2).max(30),
+    name: Joi.string().min(2).max(30).regex(/^[0-9a-zA-Z ]*$/),
     email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
     profil_url: Joi.string().min(3).max(5000),
     age: Joi.number().min(16).max(120),

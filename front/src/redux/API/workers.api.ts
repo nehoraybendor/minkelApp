@@ -1,4 +1,4 @@
-import { WorkerEntity } from "../interfaces/workers";
+import { WorkerEntity, workerFromDB } from "../../types/entities/worker";
 import { mainApi } from "./main.api";
 
 
@@ -7,14 +7,14 @@ const workersAPI = mainApi.injectEndpoints({
 
     endpoints: (build) => ({
 
-        findAllWorkers: build.query<WorkerEntity[], number>({
+        findAllWorkers: build.query<workerFromDB[], number>({
             query: (page) => ({
                 url: 'workers/',
                 method: 'GET',
             }),
             providesTags: ["Worker"]
         }),
-        createWorker: build.mutation<WorkerEntity[], WorkerEntity>({
+        createWorker: build.mutation<workerFromDB[], WorkerEntity>({
             query: (body) => ({
                 url: "workers/",
                 method: "POST",

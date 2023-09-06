@@ -35,7 +35,7 @@ function Login() {
                     <h2 className='text-center text-[30px]'>Login</h2>
                     <button
                         type='button'
-                        onClick={() => (window as any).login.close()}
+                        onClick={() => window.login.close()}
                         className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                     {/* <form className="mt-8 space-y-4 p-4" > */}
                     <div>
@@ -63,8 +63,8 @@ function Login() {
                     <div className="text-sm font-medium text-gray-900 dark:text-white">
                         don't have an account ? <button type='button' className="text-blue-600 hover:underline dark:text-blue-500 capitalize"
                             onClick={() => {
-                                (window as any).FBRegister.showModal();
-                                (window as any).login.close();
+                                window.FBRegister.showModal();
+                                window.login.close();
                             }}
                         >signUp now !</button>
                     </div>

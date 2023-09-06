@@ -25,7 +25,7 @@ const Registred: FC<props> = ({ children }) => {
             const tokendata = await user?.getIdTokenResult()
             const token = await user?.getIdToken()
             console.log(tokendata);
-            if (!tokendata?.claims.fullName) (window as any).completeProfile.showModal()
+            if (!tokendata?.claims.fullName) window.completeProfile.showModal()
             dispatch(setTokenData(tokendata))
             dispatch(setToken(token))
             setLoading(false)

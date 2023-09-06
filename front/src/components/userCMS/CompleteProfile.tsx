@@ -20,7 +20,7 @@ function CompleteProfile() {
         try {
             console.log(data);
             if (!auth?.currentUser?.uid) {
-                (window as any).errorReload.showModal()
+                window.errorReload.showModal()
                 throw new Error("faild  to auth")
             }
             await createUser({ ...data, uid: auth.currentUser.uid });
@@ -28,7 +28,7 @@ function CompleteProfile() {
 
 
 
-            (window as any).completeProfile.close()
+            window.completeProfile.close()
             navigate('/', { state: { refresh: "refresh" } });
         } catch (error) {
             console.log(error);
@@ -37,8 +37,8 @@ function CompleteProfile() {
 
     }
 
-    if (isLoading) (window as any).basicLoading.showModal()
-    if (isSuccess) (window as any).basicLoading.close()
+    if (isLoading) window.basicLoading.showModal()
+    if (isSuccess) window.basicLoading.close()
     return (
         <div>
             <BasicLoading />
@@ -47,7 +47,7 @@ function CompleteProfile() {
                 <form method="dialog2" className="modal-box space-y-3" onSubmit={handleSubmit(onSubmit1)}>
                     <h2 className='text-center text-[30px] capitalize'>Complete you profilee </h2>
                     <button type='button'
-                        onClick={() => (window as any).completeProfile.close()}
+                        onClick={() => window.completeProfile.close()}
 
                         className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
 

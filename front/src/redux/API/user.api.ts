@@ -1,5 +1,5 @@
 import { User } from "firebase/auth";
-import type { createUserResponse, userInDB } from "../interfaces/user.api";
+import type { createUserResponse, userInDB } from "../../types/entities/user";
 import { mainApi } from "./main.api";
 
 export const userAPI = mainApi.injectEndpoints({
