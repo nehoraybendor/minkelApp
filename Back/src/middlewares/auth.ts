@@ -7,7 +7,11 @@ export interface AuthedRequset extends Request {
 }
 
 const extractTokenFromHeaders = (req: Request) => {
-  const [type, token] = req.header("Authorization")?.split(" ") ?? [];
+  const [type, token] = req.headers.authorization?.split(" ") ?? [];
+
+
+
+  
   return type === "Bearer" ? token : undefined;
 }
 
@@ -15,6 +19,8 @@ const extractTokenFromHeaders = (req: Request) => {
 
 export const authGuard: RequestHandler = async (req, res, next) => {
   const token = extractTokenFromHeaders(req)
+
+  
   if (!token) {
     return res.status(401).json({ msg: "You need to send token to this endpoint" })
   }

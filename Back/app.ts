@@ -3,7 +3,7 @@ import path from "path";
 import http from "http";
 import cors from "cors";
 import { initializeApp } from 'firebase-admin/app';
-import cred from './cred.json';
+import { project_id, client_email, private_key } from './cred.json';
 import { mainRouter } from "./src/routers/configRoutes"
 import { initDB } from "./src/db/mongoConnect"
 import admin from 'firebase-admin'
@@ -11,7 +11,11 @@ import dotenv from 'dotenv'
 import { mainErrorHandler } from './src/middlewares/Errors/errorHandler'
 dotenv.config()
 const fb = initializeApp({
-    credential: admin.credential.cert((cred as any))
+    credential: admin.credential.cert({
+        clientEmail: client_email,
+        privateKey: private_key,
+        projectId: project_id
+    })
 });
 
 initDB()
@@ -39,6 +43,6 @@ const server = http.createServer(app);
 let port = process.env.PORT || 8595;
 // הפעלת השרת והאזנה לפורט המבוקש
 server.listen(port, () => {
-    console.log("listening on port " + port);
+    console.log("\x1b[36m listening on port \x1b[32m" + port + "\x1b[0m");
 });
 

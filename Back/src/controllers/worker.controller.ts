@@ -7,7 +7,7 @@ export const findWorkers: RequestHandler = async (req, res, next) => {
     try {
 
         const workers = await workerModel.find({});
-        res.status(200).json({ workers })
+        res.status(200).json( workers )
     } catch (error) {
         next(error)
     }
@@ -17,7 +17,7 @@ export const findUnique: RequestHandler = async (req, res, next) => {
         const id = req.params?.id
         const workers = await workerModel.findOne({ _id: id });
         if (!workers) throw new HTTPException(404, "Workers not found")
-        res.status(200).json({ workers })
+        res.status(200).json( workers )
     } catch (error) {
         next(error)
     }
@@ -27,7 +27,7 @@ export const createWorker: RequestHandler = async (req, res, next) => {
         const { value, error } = validateWorker({ ...req.body });
         if (error) throw error;
         const worker = await workerModel.create(value);
-        res.status(200).json({ worker })
+        res.status(200).json( worker )
     } catch (error) {
         next(error)
     }
