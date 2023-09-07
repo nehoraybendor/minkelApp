@@ -1,63 +1,65 @@
 import { RequestHandler } from "express"
 import { validateGoal, goalModel } from "../models/goalModel";
-import { UserModel } from "../models/userModel";
+import { HTTPException } from "../middlewares/Errors/HTTPException";
 
-export const findGoals: RequestHandler = async (req, res) => {
+
+export const findGoals: RequestHandler = async ({ tokenData }, res, next) => {
     try {
-        
-        const todo = await goalModel.find({ user_id: req.tokenData._id, isActive: true })
+        const todo = await goalModel.find({ $and: [{ created_by: tokenData.sub }, { isCompleted: false }] })
         res.status(200).json(todo);
     } catch (error) {
-        console.log(error);
-        return res.status(500).json({ error });
+        next(error)
     }
 }
-export const findeAchivedGoals: RequestHandler = async (req, res) => {
+export const findeCompletedGoals: RequestHandler = async ({ tokenData }, res, next) => {
     try {
-        const goals = await goalModel.find({ user_id: req.tokenData._id, isActive: false }).sort({ date: -1 });
-        if (!goals.length) {
-            return res.status(404).json({ err_msg: "No goals found in archive" });
-        }
-        res.json(goals);
+        const goals = await goalModel.find({ $and: [{ created_by: tokenData.sub }, { isCompleted: true }] });
+        res.status(200).json(goals);
     } catch (error) {
-        console.log(error);
-        return res.status(500).json({ err_msg: error });
+        next(error)
     }
 }
-export const createGoal: RequestHandler = async (req, res) => {
-    const goalObj = req.body;
-    goalObj.user_id = req.tokenData._id;
-    let validBody = validateGoal(goalObj);
-    if (validBody.error) {
-        return res.status(400).json(validBody.error.details);
-    }
+export const createGoal: RequestHandler = async ({ body, tokenData }, res, next) => {
     try {
-        let goal = new goalModel(goalObj);
-        let user = await UserModel.findById(req.tokenData.sub);
-        user.goals.push(goal.id);
-        await user.save()
-        await goal.save()
+        const { error, value } = validateGoal(body);
+        if (error) throw error;
+        const goal = await goalModel.create({ created_by: tokenData.sub, ...body })
         res.status(201).json(goal)
-    } catch (err) {
-        console.log(err);
-        return res.status(500).json({ error: 'Failed to save goal to database' });
+    } catch (error) {
+        next(error)
     }
 }
 
-export const deleteGoal: RequestHandler = async (req, res) => {
+export const deleteGoal: RequestHandler = async ({ params, tokenData }, res, next) => {
     try {
-        const goal = await goalModel.findById(req.params.id);
-        if (!goal) {
-            return res.status(404).json({ err_msg: "No goal found" });
+        const deletedGoal = await goalModel.findOneAndDelete({
+            $and: [
+                { created_by: tokenData.sub }, { _id: params.goalId }
+            ]
+        })
+        if (!deletedGoal) throw new HTTPException(404, "goal not found")
+        res.status(200).json({ msg: "deleted successfuly!", deletedGoal })
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const toggleGoal: RequestHandler = async ({ params, tokenData }, res, next) => {
+    try {
+        console.log(params.goalId);
+
+        const toUpdateGoal = await goalModel.findOne({
+            $and: [
+                { created_by: tokenData.sub }, { _id: params.goalId }
+            ]
         }
-        const data = await goalModel.deleteOne({ _id: req.params.id, user_id: req.tokenData._id })
-        if (data.deletedCount === 0) {
-            return res.status(403).json({ err_msg: "Something wrong" });
-        }
-        return res.json({ msg: "goal deleted" });
-    } catch (err) {
-        console.log(err);
-        return res.status(500).json({ err_msg: err });
+        )
+        if (!toUpdateGoal) throw new HTTPException(404, "goal not found")
+        toUpdateGoal.isCompleted = !toUpdateGoal.isCompleted;
+        const updatedGoal = await toUpdateGoal.save()
+        res.status(200).json(updatedGoal)
+    } catch (error) {
+        next(error)
     }
 }
 

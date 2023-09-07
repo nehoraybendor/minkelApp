@@ -1,11 +1,12 @@
 import { authGuard } from "../middlewares/auth";
 import { Router } from "express"
-import { createGoal, deleteGoal, findGoals, findeAchivedGoals } from "../controllers/goals.controller"
+import { createGoal, deleteGoal, findGoals, findeCompletedGoals, toggleGoal } from "../controllers/goals.controller"
 const router = Router();
 
 router
     .get("/", authGuard, findGoals)
-    .get("/archive", authGuard, findeAchivedGoals)
+    .get("/completed", authGuard, findeCompletedGoals)
     .post('/', authGuard, createGoal)
-    .delete("/:id", authGuard, deleteGoal)
+    .delete("/:goalId", authGuard, deleteGoal)
+    .patch("/toggle/:goalId",authGuard,toggleGoal)
 export default router 

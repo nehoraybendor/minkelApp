@@ -1,5 +1,6 @@
 import { RequestHandler } from "express"
 import { dealSupplierModel, validateDSupplier } from "../models/dealSupplierModel"
+import { HTTPException } from "../middlewares/Errors/HTTPException";
 
 export const findeSDeals: RequestHandler = async ({ tokenData }, res, next) => {
     try {
@@ -9,16 +10,42 @@ export const findeSDeals: RequestHandler = async ({ tokenData }, res, next) => {
         next(error)
     }
 }
-export const createSDeal: RequestHandler = async ({body,tokenData}, res) => {
-    const {error,value} = validateDSupplier(body);
-    if(error) throw error
+
+export const createSDeal: RequestHandler = async ({ body, tokenData }, res, next) => {
     try {
-        const deal = new dealSupplierModel({...body,});
-      
+        const { error, value } = validateDSupplier(body);
+        if (error) throw error
+        const deal = new dealSupplierModel({ created_by: tokenData.sub, ...body });
         await deal.save();
         res.status(201).json(deal);
     } catch (error) {
         console.log(error);
-        res.status(500).json(error);
+        next(error)
+    }
+}
+export const editSDeal: RequestHandler = async ({ body, tokenData, params }, res, next) => {
+    try {
+        const dealId = params.dealId
+        const { error, value } = validateDSupplier(body);
+        if (error) throw error
+        const updatedDeal = await dealSupplierModel.findOneAndUpdate(
+            { $and: [{ created_by: tokenData }, { _id: dealId }] },
+            value,
+            { new: true });
+        if (!updatedDeal) throw new HTTPException(404, "deal not found")
+        res.status(201).json(updatedDeal);
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const deletSDeal: RequestHandler = async ({ tokenData, params }, res, next) => {
+    try {
+        const dealId = params.dealId
+        const deletedDeal = await dealSupplierModel.findOneAndDelete({ $and: [{ created_by: tokenData }, { _id: dealId }] });
+        if (!deletedDeal) throw new HTTPException(404, "deal not found")
+        res.status(201).json(deletedDeal);
+    } catch (error) {
+        next(error)
     }
 }
