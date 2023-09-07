@@ -1,30 +1,9 @@
 import React, { useState } from 'react'
-import { useEffect } from 'react';
-import { serviceAPI } from '../../../services/apiServices';
 import DropdownButton from '../compos/dropDown';
 import { BASE_URL } from '../../constant';
 import { HiOutlinePlusCircle } from "react-icons/hi";
 import Newand from '../compos/newand';
 const Sales = () => {
-  const [sales, setSales] = useState([])
-  const [loadning, setLoading] = useState(false)
-  const url = 'http://' + BASE_URL + "/dealClient/list";
-
-
-  const fetchRequest = async () => {
-    try {
-      setLoading(true)
-      const salesDB = await serviceAPI("GET", url)
-      console.log(salesDB.data);
-      setSales(salesDB.data)
-      setLoading(false)
-    } catch (error) {
-      console.log(error);
-    }
-
-  }
-
-
 
 
 

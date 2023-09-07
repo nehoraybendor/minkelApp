@@ -15,7 +15,7 @@ export const createSDeal: RequestHandler = async ({ body, tokenData }, res, next
     try {
         const { error, value } = validateDSupplier(body);
         if (error) throw error
-        const deal = new dealSupplierModel({ created_by: tokenData.sub, ...body });
+        const deal = new dealSupplierModel({ created_by: tokenData.sub, ...value });
         await deal.save();
         res.status(201).json(deal);
     } catch (error) {
