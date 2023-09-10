@@ -1,41 +1,47 @@
-import React from 'react'
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import DropdownButton from '../compos/dropDown';
-import { BASE_URL } from '../../constant';
 import { HiOutlinePlusCircle } from 'react-icons/hi';
-import Newand from '../compos/newand';
+import { useDeleteSdealMutation, useFindAllSDealsQuery } from '../../redux/API/sellerDeals.api';
+import AddDoubt from '../compos/addDoubt';
+import { SupplierDealFromDB } from '../../types/entities/SupplierDeal';
 
 const Doubt = () => {
-  const [doubt, setDoubt] = useState([])
-  const [loadning, setLoading] = useState(false)
-  const url = 'http://' + BASE_URL + "/dealSupplier/list";
-  useEffect(() => {fetchRequest()}, [])
 
-  const fetchRequest = async () => {
-    try {
-      setLoading(true)
-      const doubtDB = await serviceAPI("GET", url)
-      console.log(doubtDB.data);
-      setDoubt(doubtDB.data)
-      setLoading(false)
-    } catch (error) {
-      console.log(error);
-    }
+  const { isError, error, isLoading, data, isSuccess } = useFindAllSDealsQuery(undefined)
+  const [target, setTarget] = useState<SupplierDealFromDB>()
+  const [deleteOne] = useDeleteSdealMutation()
 
+
+  const actions = {
+    edit: (data: SupplierDealFromDB) => {
+      setTarget(data)
+      window.addDoubt.showModal()
+    },
+    delete: async (data: SupplierDealFromDB) => {
+      try {
+        console.log(data._id);
+        
+        await deleteOne(data._id).unwrap()
+      } catch (error) {
+        console.log(error);
+
+      }
+    },
   }
 
+ 
   return (
     <div className='mx-auto  '>
-       <button onClick={() => window.btnaddeal.showModal()}>
-        <HiOutlinePlusCircle className='w-11 h-11 text-gray-500 dark:text-gray-400 mt-12 -mb-20'/>
-      </button>
+      <button onClick={() => window.addDoubt.showModal()}>
+        <HiOutlinePlusCircle className='w-11 h-11 text-gray-500 dark:text-gray-400 mt-12 -mb-20' />
+      </button>
       <h2 className='text-center text-[50px] mt-2'>DOUBT</h2>
 
       <div className="flex  justify-between my-5">
         <div className=''>
-       <DropdownButton/>
+          <DropdownButton />
         </div>
-        <label for="table-search" className="sr-only">Search</label>
+        <label className="sr-only">Search</label>
         <div className="relative">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <svg className="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
@@ -51,13 +57,16 @@ const Doubt = () => {
             Product name
           </th>
           <th scope="col" className="px-6 py-3">
-            Color
+            Supplier Name
           </th>
           <th scope="col" className="px-6 py-3">
-            Category
+            Amount
           </th>
           <th scope="col" className="px-6 py-3">
             Price
+          </th>
+          <th scope="col" className="px-6 py-3">
+            TotalPrice
           </th>
           <th scope="col" className="px-6 py-3">
             Action
@@ -84,34 +93,39 @@ const Doubt = () => {
 
               <div className='grid absolute inset-0 overflow-auto scrollbar'>
 
-                {loadning ? <span className="place-self-center loading loading-spinner loading-lg"></span> :
-                  doubt?.map((item, i) => {
+                {isLoading ? <span className="place-self-center loading loading-spinner loading-lg"></span> :
+                  isSuccess && data && data?.map((doubt, i) => {
+                    const { amount, price, product_name, supplier_name } = doubt
                     return (
                       <div>
                         <tr key={i} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
 
                           <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {item.name_supplier}
+                            {supplier_name}
                           </th>
                           <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {item.nameProducts}
+                            {product_name}
                           </th>
                           <td className="px-6 py-4">
-                            {item.price}
+                            {price}
                           </td>
                           <td className="px-6 py-4">
-                            {item.amount}
+                            {amount}
                           </td>
                           <td className="px-6 py-4">
-                            {item.total_price}
+                            {amount * price}
                           </td>
                           <td className="px-6 py-4">
-                            {item.time}
+                            <button className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                              onClick={() => actions.edit(doubt)}
+                            >Edit</button>
                           </td>
                           <td className="px-6 py-4">
-                            <button className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</button>
+                            <button className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                              onClick={() => actions.delete(doubt)}
+                            >Delete</button>
                           </td>
-                          
+
                         </tr>
                       </div>
                     )
@@ -128,7 +142,7 @@ const Doubt = () => {
 
 
       </div>
-      <Newand/>
+      <AddDoubt target={target} />
     </div>
 
 

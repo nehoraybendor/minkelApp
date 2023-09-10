@@ -42,7 +42,9 @@ export const editSDeal: RequestHandler = async ({ body, tokenData, params }, res
 export const deletSDeal: RequestHandler = async ({ tokenData, params }, res, next) => {
     try {
         const dealId = params.dealId
-        const deletedDeal = await dealSupplierModel.findOneAndDelete({ $and: [{ created_by: tokenData }, { _id: dealId }] });
+        console.log(dealId);
+        
+        const deletedDeal = await dealSupplierModel.findOneAndDelete({ $and: [{ created_by: tokenData.sub }, { _id: dealId }] });
         if (!deletedDeal) throw new HTTPException(404, "deal not found")
         res.status(201).json(deletedDeal);
     } catch (error) {

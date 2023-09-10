@@ -19,7 +19,8 @@ const extractTokenFromHeaders = (req: Request) => {
 
 export const authGuard: RequestHandler = async (req, res, next) => {
   const token = extractTokenFromHeaders(req)
-
+  console.log(token);
+  
   
   if (!token) {
     return res.status(401).json({ msg: "You need to send token to this endpoint" })

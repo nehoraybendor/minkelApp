@@ -9,14 +9,12 @@ export const mainApi = createApi({
         baseUrl: BASE_URL + '/',
         prepareHeaders(headers, api) {
             const token = (api.getState() as RootState).user.token
-            if(token){
-                headers.set("Authorization", "Bearer " + token)
-            } 
-            return headers// collect token from redux 
+            headers.set("Authorization", "Bearer " + token)
+            return headers
         },
     }),
     endpoints: () => ({}),
-    tagTypes: ['Worker', 'User','Cdeal', 'Sdeal','Goal'],
+    tagTypes: ['Worker', 'User', 'Cdeal', 'Sdeal', 'Goal'],
 
 })
 

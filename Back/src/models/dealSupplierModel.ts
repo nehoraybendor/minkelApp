@@ -4,7 +4,7 @@ import Joi from "joi";
 
 
 const dealsSupplierSchema = new mongoose.Schema({
-    _id: { type: Types.ObjectId, default: new Types.ObjectId() },
+
     supplier_name: String,
     ordered_at: {
         type: Date,

@@ -1,5 +1,5 @@
 export interface DBEntity {
-    _id?: string;
+    _id: string;
     created_by: string
     date_created: string
 }

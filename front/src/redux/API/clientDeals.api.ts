@@ -3,7 +3,7 @@ import { mainApi } from "./main.api";
 const routUrl = "/dealClient"
 const clientDealsApi = mainApi.injectEndpoints({
     endpoints: (build) => ({
-        findAllCDeals: build.query<ClientDealFromDB[], undefined>({
+        findAllCDeals: build.query<ClientDealFromDB[], unknown>({
             query: () => ({
                 url: routUrl,
                 method: "GET",

@@ -7,5 +7,7 @@ declare global {
         errorReload: HTMLDialogElement,
         completeProfile: HTMLDialogElement,
         basicLoading: HTMLDialogElement,
+        addSale:HTMLDialogElement,
+        addDoubt: HTMLDialogElement,
     }
 }
