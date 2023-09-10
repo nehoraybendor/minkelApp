@@ -1,7 +1,7 @@
 export interface userInDB {
-    uid: string;
-    age: number;
-    gender: string;
+    uid?: string;
+    age?: number;
+    gender?: string;
 
 }
 export interface createUserResponse extends userInDB {
