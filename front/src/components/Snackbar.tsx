@@ -40,7 +40,7 @@ export default function SimpleSnackbar() {
 
  return (
   <div>
-   <Button variant='outlined' sx={{mt:3}} color='inherit' onClick={handleClick}>שלח דיווח</Button>
+   <Button variant='outlined' sx={{mt:3,}} color='inherit' onClick={handleClick}>שלח דיווח</Button>
    <Snackbar
     open={open}
     autoHideDuration={6000}

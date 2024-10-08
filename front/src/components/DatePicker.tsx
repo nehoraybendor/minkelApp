@@ -12,7 +12,10 @@ import { blue } from '@mui/material/colors';
 export default function ResponsiveDatePickers() {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DatePicker label='בחר תאריך' sx={{ bgcolor: 'white' }} defaultValue={dayjs(new Date)} />
+      <DatePicker
+        label='בחר תאריך'
+        sx={{ bgcolor: 'white',width: '100%' }}
+        defaultValue={dayjs(new Date)} />
     </LocalizationProvider>
   );
 }
